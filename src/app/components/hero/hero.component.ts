@@ -29,4 +29,12 @@ export class HeroComponent {
     // Clean up
     document.body.removeChild(link);
   }
+  
+  scrollToContact() {
+    // Smooth scroll to contact section
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }
