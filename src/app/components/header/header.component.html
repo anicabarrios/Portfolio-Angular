@@ -1,0 +1,78 @@
+<header class="fixed w-full z-50 transition-all duration-500" 
+        [ngClass]="scrolled 
+          ? 'py-3 backdrop-blur-md bg-neutral-900/80 shadow-lg' 
+          : 'py-5 bg-transparent'">
+  <div class="container relative mx-auto px-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo with animated gradient on hover -->
+      <a href="#" 
+         class="text-3xl font-bold font-heading relative group transition-all duration-300"
+         [ngClass]="scrolled ? 'text-light' : 'text-light'">
+        <span class="relative z-10">Anica Barrios</span>
+        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-800 to-accent-400 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      
+      <!-- Mobile Menu Button -->
+      <button 
+        (click)="toggleMenu()" 
+        class="lg:hidden focus:outline-none rounded-lg p-2 transition-all duration-300 hover:text-accent-400"
+        [ngClass]="scrolled 
+          ? 'text-light' 
+          : 'text-light'"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path *ngIf="!menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <path *ngIf="menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <!-- Desktop Navigation with animated underlines -->
+      <nav class="hidden lg:flex items-center space-x-6">
+        <a 
+          *ngFor="let item of navItems" 
+          [href]="item.url" 
+          class="relative py-2 px-1 font-medium transition-all duration-300 overflow-hidden group"
+          [ngClass]="scrolled 
+            ? 'text-neutral-300 hover:text-accent-400' 
+            : 'text-neutral-200 hover:text-accent-400'"
+        >
+          <span class="relative z-10">{{ item.name }}</span>
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-700 to-accent-400 transition-all duration-300 group-hover:w-full"></span>
+        </a>
+        
+        <!-- Contact button -->
+        <div (click)="navigateTo('#contact')">
+          <app-button variant="outline" size="sm">Contact Me</app-button>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <div 
+    *ngIf="menuOpen" 
+    class="lg:hidden w-full absolute left-0 right-0 top-full transition-all duration-300 transform origin-top"
+    [ngClass]="'backdrop-blur-sm bg-gradient-to-b from-neutral-900/95 to-neutral-900/90'"
+  >
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col divide-y divide-neutral-800">
+        <a 
+          *ngFor="let item of navItems" 
+          [href]="item.url" 
+          class="py-4 font-medium transition-all duration-200 relative overflow-hidden hover:pl-2"
+          [ngClass]="'text-center text-neutral-300 hover:text-accent-400'"
+          (click)="toggleMenu()"
+        >
+          <span>{{ item.name }}</span>
+        </a>
+        
+        <!-- Mobile contact button -->
+        <div class="py-4 text-center">
+          <div (click)="navigateToAndCloseMenu('#contact')">
+            <app-button variant="outline" size="sm">Contact Me</app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
