@@ -16,10 +16,9 @@ export class HeaderComponent {
   
   navItems = [
     { name: 'Home', url: '#' },
-    { name: 'About', url: '#about' },
+    { name: 'About', url: '/about' },
     { name: 'Skills', url: '#skills' },
     { name: 'Projects', url: '#projects' },
-    { name: 'Experience', url: '#experience' }
   ];
   
   @HostListener('window:scroll', [])
@@ -32,7 +31,6 @@ export class HeaderComponent {
   }
   
   navigateTo(selector: string) {
-    // Handle navigation to anchor links
     const element = document.querySelector(selector);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -40,7 +38,7 @@ export class HeaderComponent {
   }
   
   navigateToAndCloseMenu(selector: string) {
-    this.toggleMenu(); // Close the menu
-    this.navigateTo(selector); // Navigate to the section
+    this.toggleMenu();
+    this.navigateTo(selector);
   }
 }

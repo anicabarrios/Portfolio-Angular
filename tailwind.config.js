@@ -55,8 +55,71 @@ module.exports = {
         dark: '#233239',
         light: '#F5F8FA',
       },
-      animation: {
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+     animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'particle-float': 'particleFloat 12s ease-in-out infinite',
+        'rotate-3d': 'rotate3D 20s linear infinite',
+        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+        'breathe': 'breathe 3s ease-in-out infinite',
+        'holographic': 'holographicShift 4s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '25%': { transform: 'translateY(-15px) rotate(1deg)' },
+          '50%': { transform: 'translateY(-8px) rotate(-1deg)' },
+          '75%': { transform: 'translateY(-20px) rotate(0.5deg)' },
+        },
+        particleFloat: {
+          '0%, 100%': { 
+            transform: 'translateY(0px) translateX(0px) rotate(0deg)', 
+            opacity: '0.6' 
+          },
+          '25%': { 
+            transform: 'translateY(-30px) translateX(10px) rotate(90deg)', 
+            opacity: '1' 
+          },
+          '50%': { 
+            transform: 'translateY(-15px) translateX(-5px) rotate(180deg)', 
+            opacity: '0.8' 
+          },
+          '75%': { 
+            transform: 'translateY(-40px) translateX(8px) rotate(270deg)', 
+            opacity: '0.9' 
+          },
+        },
+        rotate3D: {
+          '0%': { transform: 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)' },
+          '33%': { transform: 'rotateX(120deg) rotateY(120deg) rotateZ(120deg)' },
+          '66%': { transform: 'rotateX(240deg) rotateY(240deg) rotateZ(240deg)' },
+          '100%': { transform: 'rotateX(360deg) rotateY(360deg) rotateZ(360deg)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { 
+            boxShadow: '0 0 20px rgba(154, 212, 214, 0.3)' 
+          },
+          '50%': { 
+            boxShadow: '0 0 40px rgba(154, 212, 214, 0.6)' 
+          },
+        },
+        breathe: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+          '50%': { transform: 'scale(1.05)', opacity: '1' },
+        },
+        holographicShift: {
+          '0%, 100%': { 
+            backgroundPosition: '0% 50%', 
+            filter: 'hue-rotate(0deg)' 
+          },
+          '50%': { 
+            backgroundPosition: '100% 50%', 
+            filter: 'hue-rotate(180deg)' 
+          },
+        },
+      },
+      perspective: {
+        '500': '500px',
+        '1000': '1000px',
       },
     },
   },

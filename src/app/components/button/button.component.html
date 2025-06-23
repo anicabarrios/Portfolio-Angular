@@ -1,5 +1,5 @@
 <button 
-  [class]="'group relative ' + (fullWidth ? 'w-full ' : '') + (disabled ? 'opacity-50 cursor-not-allowed ' : '') + size"
+  [class]="getButtonClasses()"
   [type]="type"
   [disabled]="disabled">
   <!-- Content with proper styling -->

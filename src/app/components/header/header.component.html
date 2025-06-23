@@ -65,10 +65,15 @@
           <span>{{ item.name }}</span>
         </a>
         
-        <!-- Mobile contact button -->
         <div class="py-4 text-center">
           <div (click)="navigateToAndCloseMenu('#contact')">
-            <app-button variant="outline" size="md">Contact Me</app-button>
+            <app-button 
+              variant="outline" 
+              size="md"
+              [mobileFullWidth]="false"
+              class="w-full sm:w-auto">
+              Contact Me
+            </app-button>
           </div>
         </div>
       </div>
