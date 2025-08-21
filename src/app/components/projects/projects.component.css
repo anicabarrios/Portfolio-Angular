@@ -1,0 +1,84 @@
+/* Project Card Animations */
+.project-card-animate {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.project-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.auto-rows-fr {
+  grid-auto-rows: 1fr;
+}
+
+/* Staggered Animation Delays */
+.project-card-1 { animation-delay: 0.1s; }
+.project-card-2 { animation-delay: 0.3s; }
+.project-card-3 { animation-delay: 0.5s; }
+.project-card-4 { animation-delay: 0.7s; }
+
+
+/* Responsive Optimizations */
+@media (max-width: 768px) {
+  .project-card-animate {
+    animation-delay: 0.1s !important;
+  }
+  
+
+  .auto-rows-fr {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  .auto-rows-fr {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .auto-rows-fr {
+    gap: 3rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .project-card-animate {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+}
+
+/* Print Styles */
+@media print {
+  .project-card {
+    break-inside: avoid;
+    height: auto;
+  }
+  
+  .auto-rows-fr {
+    display: block;
+  }
+  
+  .project-card-animate {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
