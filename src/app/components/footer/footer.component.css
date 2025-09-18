@@ -1,0 +1,246 @@
+/* Essential animations only */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Core responsive grid layout */
+.footer-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+/* Mobile: Single column, centered */
+@media (max-width: 767px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .footer-grid > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-quick-links nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .footer-quick-links nav a {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .footer-quick-links nav a:hover {
+    background: rgba(154, 212, 214, 0.1);
+    border-color: rgba(154, 212, 214, 0.2);
+    transform: translateY(-1px);
+  }
+}
+
+/* Tablet: 3 columns, centered alignment */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .footer-grid {
+    grid-template-columns: 1fr 220px 1fr;
+    align-items: start;
+  }
+  
+  .footer-grid > * {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer-quick-links nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .footer-quick-links nav a {
+    width: 100%;
+    justify-content: center;
+    padding: 0.625rem 0.75rem;
+    margin-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .footer-quick-links nav a:hover {
+    background: rgba(154, 212, 214, 0.1);
+    border-color: rgba(154, 212, 214, 0.2);
+    transform: translateY(-1px);
+  }
+}
+
+/* Desktop: 3 columns, proper alignment */
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1.2fr 240px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  
+  .footer-brand {
+    text-align: left;
+    align-items: flex-start !important;
+  }
+  
+  .footer-quick-links {
+    text-align: left;
+    align-items: flex-start !important;
+  }
+  
+  .footer-quick-links nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .footer-quick-links nav a {
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+  }
+  
+  .footer-quick-links nav a:hover {
+    color: #9ad4d6;
+    transform: translateX(4px);
+  }
+  
+  .footer-social {
+    text-align: center;
+    align-items: center !important;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1280px) {
+  .footer-grid {
+    grid-template-columns: 1.3fr 280px 1.2fr;
+    gap: 4rem;
+  }
+}
+
+/* Hover effects (desktop only) */
+@media (hover: hover) and (pointer: fine) {
+  .social-link::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #9ad4d6, #586f7c, #9ad4d6);
+    border-radius: inherit;
+    opacity: 0;
+    filter: blur(8px);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .social-link:hover::before {
+    opacity: 0.6;
+  }
+  
+  .resume-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .resume-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(154, 212, 214, 0.3), transparent);
+    transition: left 0.6s ease;
+  }
+  
+  .resume-btn:hover::before {
+    left: 100%;
+  }
+  
+  button:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .footer-quick-links nav a:active {
+    background: rgba(154, 212, 214, 0.1) !important;
+    transform: scale(0.98);
+  }
+  
+  button:active,
+  .social-link:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Animation for grid items */
+.footer-grid > * {
+  animation: fade-in-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.footer-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.footer-grid > *:nth-child(2) { animation-delay: 0.2s; }
+.footer-grid > *:nth-child(3) { animation-delay: 0.3s; }
+
+/* Back to top button */
+.back-to-top-btn {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states */
+button:focus,
+a:focus {
+  outline: 2px solid #9ad4d6;
+  outline-offset: 2px;
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+  .footer-grid {
+    gap: 1.5rem;
+  }
+  
+  .social-link {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .social-link svg {
+    width: 16px;
+    height: 16px;
+  }
+}
