@@ -43,7 +43,6 @@ export class CardComponent {
   
   @Output() cardClick = new EventEmitter<CardData>();
   @Output() linkClick = new EventEmitter<{ link: any; data: CardData }>();
-  @Output() imageClick = new EventEmitter<string>();
 
   // Centralized variant classes configuration
   private readonly variantStyles = {
@@ -127,49 +126,6 @@ export class CardComponent {
   onLinkClick(link: any, event: Event): void {
     event.stopPropagation();
     this.linkClick.emit({ link, data: this.data });
-  }
-
-  openImageModal(imageUrl: string, event: Event): void {
-    event.stopPropagation();
-    this.imageClick.emit(imageUrl);
-    
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4';
-    modal.style.animation = 'fadeIn 0.3s ease-out';
-    
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = this.data.imageAlt || this.data.title;
-    img.className = 'max-w-full max-h-full object-contain rounded-lg shadow-2xl';
-    img.style.animation = 'scaleIn 0.3s ease-out';
-    
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '×';
-    closeBtn.className = 'absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors z-10';
-    closeBtn.style.cssText = 'background:rgba(0,0,0,0.5);border-radius:50%;width:50px;height:50px;border:none;cursor:pointer';
-    
-    const closeModal = () => {
-      modal.style.animation = 'fadeOut 0.3s ease-out';
-      setTimeout(() => document.body.removeChild(modal), 300);
-    };
-    
-    closeBtn.onclick = closeModal;
-    modal.onclick = (e) => e.target === modal && closeModal();
-    
-    modal.appendChild(img);
-    modal.appendChild(closeBtn);
-    document.body.appendChild(modal);
-    
-    if (!document.getElementById('image-modal-styles')) {
-      const styles = document.createElement('style');
-      styles.id = 'image-modal-styles';
-      styles.textContent = `
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes scaleIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-      `;
-      document.head.appendChild(styles);
-    }
   }
 
   // Centralized style getters
@@ -303,19 +259,6 @@ export class CardComponent {
   getDesignIcon(skill: string): string {
     return this.iconMaps.design[skill as keyof typeof this.iconMaps.design] || '🎨';
   }
-
-  // Achievement methods
-  getAchievementIconContainerClasses(): string {
-    const variants = {
-      primary: 'bg-primary-100/60 border-primary-200/40 group-hover:bg-primary-200/60',
-      accent: 'bg-accent-100/60 border-accent-200/40 group-hover:bg-accent-200/60',
-      neutral: 'bg-neutral-100/60 border-neutral-200/40 group-hover:bg-neutral-200/60',
-      glass: 'bg-white/10 border-white/20 group-hover:bg-white/20'
-    };
-    return variants[this.variant];
-  }
-
-  getAchievementIconClasses(): string { return this.getVariantStyle('iconText'); }
 
   // Tech and Link methods
   getTechTagClasses(): string {

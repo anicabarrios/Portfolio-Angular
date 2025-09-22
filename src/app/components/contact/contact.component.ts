@@ -199,12 +199,6 @@ export class ContactComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  getFieldGlowClass(fieldName: string): string {
-    if (this.isFieldInvalid(fieldName)) return 'field-glow-invalid';
-    if (this.isFieldValid(fieldName)) return 'field-glow-valid';
-    return 'field-glow-focus';
-  }
-
   getCharacterCount(fieldName: string): number {
     return this.contactForm.get(fieldName)?.value?.length || 0;
   }

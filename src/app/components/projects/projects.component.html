@@ -1,8 +1,8 @@
-<section id="projects" class="py-16 md:py-24 bg-gradient-to-br from-primary-50 via-white to-accent-50">
+<section id="projects" class="py-12 md:py-16 lg:py-20 bg-gradient-to-br from-primary-50 via-white to-accent-50">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header -->
-    <div class="text-center mb-16">
+    <div class="text-center mb-12">
       <!-- Badge -->
       <div class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white/60 backdrop-blur-sm border border-white/40 text-primary-700 rounded-full text-xs sm:text-sm font-semibold mb-6 sm:mb-8 shadow-sm">
         <div class="w-2 h-2 bg-primary-500 rounded-full mr-2 sm:mr-3 animate-pulse"></div>
@@ -22,29 +22,31 @@
         <span class="text-accent-600 font-semibold">full-stack development</span>, 
         modern frameworks, and creating exceptional user experiences across various industries.
       </p>
-      
-      
     </div>
 
-    <!-- Projects Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 auto-rows-fr">
+    <!-- Projects Grid  -->
+    <div class="grid gap-4 sm:gap-5 md:gap-5 lg:gap-4 xl:gap-5 2xl:gap-6 auto-rows-fr
+                grid-cols-1 
+                sm:grid-cols-1
+                md:grid-cols-2
+                lg:grid-cols-3
+                xl:grid-cols-3
+                2xl:grid-cols-3">
       <div *ngFor="let project of projectsData; let i = index" 
-           class="transform transition-all duration-700 project-card-animate flex"
-           [style.animation-delay]="(i * 0.2) + 's'">
+           class="transform transition-all duration-700 project-card-animate flex h-full"
+           [style.animation-delay]="(i * 0.15) + 's'">
         <app-card
           [data]="project"
           type="project"
           [variant]="getProjectVariant(i)"
           [iconPath]="getProjectIcon(i)"
           iconType="emoji"
-          size="lg"
+          size="md"
           orientation="vertical"
           class="w-full flex flex-col project-card h-full"
           [ngClass]="'project-card-' + (i + 1)">
         </app-card>
       </div>
     </div>
-
-    
   </div>
 </section>
