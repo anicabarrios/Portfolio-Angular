@@ -2,10 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Portfolio</title>
+  <title>Anica Barrios | Full Stack Web Developer</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  
+  <style>
+    /* Hide content until Angular is ready */
+    body {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    
+    body.angular-ready {
+      opacity: 1;
+    }
+    
+    body {
+      animation: showBodyFallback 0.1s ease-in-out 5s forwards;
+    }
+    
+    @keyframes showBodyFallback {
+      to { opacity: 1; }
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>

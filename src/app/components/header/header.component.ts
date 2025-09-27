@@ -16,7 +16,7 @@ export class HeaderComponent {
   
   navItems = [
     { name: 'Home', url: '#' },
-    { name: 'About', url: '/about' },
+    { name: 'About', url: '#about' },
     { name: 'Skills', url: '#skills' },
     { name: 'Projects', url: '#projects' },
   ];
@@ -31,14 +31,22 @@ export class HeaderComponent {
   }
   
   navigateTo(selector: string) {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (selector === '#') {
+      // Scroll to top for home
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
   
   navigateToAndCloseMenu(selector: string) {
     this.toggleMenu();
-    this.navigateTo(selector);
+    // Add a small delay to ensure the menu closes smoothly before scrolling
+    setTimeout(() => {
+      this.navigateTo(selector);
+    }, 100);
   }
 }

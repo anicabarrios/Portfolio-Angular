@@ -1,13 +1,96 @@
-<app-header></app-header>
+<!-- Page Loader -->
+<div class="page-loader" [class.hide]="pageLoaded">
+  <div class="loader-content">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Anica Barrios</div>
+    <div class="loader-subtext">Loading Portfolio...</div>
+  </div>
+</div>
 
-<app-hero></app-hero>
+<!-- Main Page Content -->
+<div [class.loaded]="pageLoaded">
+  <!-- Header -->
+  <app-header [class.loaded]="pageLoaded"></app-header>
 
-<app-about></app-about>
+  <!-- Scroll Progress -->
+  <div class="scroll-progress-container" [class.visible]="pageLoaded">
+    <div class="scroll-progress-bar" [style.width.%]="scrollProgress"></div>
+  </div>
 
-<app-skills></app-skills>
+  <!-- Hero Section -->
+  <div class="animated-component hero-section"
+       [class.component-hidden]="!componentsVisible.hero"
+       [class.component-visible]="componentsVisible.hero"
+       [class.animate-slide-in-bottom]="componentsVisible.hero && animationsEnabled"
+       #heroSection 
+       id="home">
+    <app-hero></app-hero>
+  </div>
 
-<app-projects></app-projects>
+  <!-- About Section -->
+  <div class="animated-component about-section"
+       [class.component-hidden]="!componentsVisible.about"
+       [class.component-visible]="componentsVisible.about"
+       [class.animate-slide-in-delayed]="componentsVisible.about && animationsEnabled"
+       #aboutSection 
+       id="about">
+    <app-about></app-about>
+  </div>
 
-<app-contact></app-contact>
+  <!-- Skills Section -->
+  <div class="animated-component skills-section"
+       [class.component-hidden]="!componentsVisible.skills"
+       [class.component-visible]="componentsVisible.skills"
+       [class.animate-fade-in-up]="componentsVisible.skills && animationsEnabled"
+       #skillsSection 
+       id="skills">
+    <app-skills></app-skills>
+  </div>
 
-<app-footer></app-footer>
+  <!-- Projects Section -->
+  <div class="animated-component projects-section"
+       [class.component-hidden]="!componentsVisible.projects"
+       [class.component-visible]="componentsVisible.projects"
+       [class.animate-slide-scale]="componentsVisible.projects && animationsEnabled"
+       #projectsSection 
+       id="projects">
+    <app-projects></app-projects>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="animated-component contact-section"
+       [class.component-hidden]="!componentsVisible.contact"
+       [class.component-visible]="componentsVisible.contact"
+       [class.animate-slide-in-delayed]="componentsVisible.contact && animationsEnabled"
+       #contactSection 
+       id="contact">
+    <app-contact></app-contact>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="animated-component footer-section"
+       [class.footer-hidden]="!componentsVisible.footer"
+       [class.component-visible]="componentsVisible.footer"
+       [class.animate-footer-slide]="componentsVisible.footer && animationsEnabled"
+       #footerSection>
+    <app-footer></app-footer>
+  </div>
+</div>
+
+<!-- Back to Top Button -->
+<button class="back-to-top-btn"
+        [class.visible]="pageLoaded && showBackToTop"
+        (click)="scrollToTop()"
+        type="button"
+        aria-label="Scroll to top"
+        title="Back to top">
+  <svg class="back-to-top-icon" 
+       fill="none" 
+       stroke="currentColor" 
+       viewBox="0 0 24 24" 
+       stroke-width="2">
+    <path stroke-linecap="round" 
+          stroke-linejoin="round" 
+          d="M7 11l5-5m0 0l5 5m-5-5v12"/>
+  </svg>
+</button>

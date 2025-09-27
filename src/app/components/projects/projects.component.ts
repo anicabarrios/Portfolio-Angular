@@ -31,7 +31,7 @@ export class ProjectsComponent {
       imageAlt: 'Miami 2000 Auto Body website screenshot showing automotive services',
       imageCaption: 'Modern auto body shop website with Miami-inspired design and interactive elements',
       links: [
-        { text: 'View Live', url: 'https://miami2000.netlify.app/about' },
+        { text: 'View Live', url: 'https://miami2000.netlify.app/' },
         { text: 'GitHub', url: 'https://github.com/anicabarrios/miami-2000' }
       ]
     },

@@ -4,12 +4,13 @@
           : 'py-5 bg-transparent'">
   <div class="container relative mx-auto px-4">
     <div class="flex justify-between items-center">
-      <a href="#" 
-         class="text-3xl font-bold font-heading relative group transition-all duration-300 text-center sm:text-center md:text-left lg:text-left w-full sm:w-full md:w-auto lg:w-auto"
+      <button 
+         (click)="navigateTo('#')"
+         class="text-3xl font-bold font-heading relative group transition-all duration-300 text-center sm:text-center md:text-left lg:text-left w-full sm:w-full md:w-auto lg:w-auto cursor-pointer"
          [ngClass]="scrolled ? 'text-light' : 'text-light'">
         <span class="relative z-10">Anica Barrios</span>
         <span class="absolute bottom-0 left-0 right-0 mx-auto lg:mx-0 lg:right-auto w-0 h-0.5 bg-gradient-to-r from-primary-800 to-accent-400 transition-all duration-300 group-hover:w-full"></span>
-      </a>
+      </button>
       
       <!-- Mobile Menu Button  -->
       <button 
@@ -27,17 +28,17 @@
       
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center space-x-6">
-        <a 
+        <button 
           *ngFor="let item of navItems" 
-          [href]="item.url" 
-          class="relative py-2 px-1 font-medium transition-all duration-300 overflow-hidden group"
+          (click)="navigateTo(item.url)"
+          class="relative py-2 px-1 font-medium transition-all duration-300 overflow-hidden group cursor-pointer"
           [ngClass]="scrolled 
             ? 'text-neutral-300 hover:text-accent-400' 
             : 'text-neutral-200 hover:text-accent-400'"
         >
           <span class="relative z-10">{{ item.name }}</span>
           <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-700 to-accent-400 transition-all duration-300 group-hover:w-full"></span>
-        </a>
+        </button>
         
         <!-- Contact button -->
         <div (click)="navigateTo('#contact')">
@@ -55,15 +56,14 @@
   >
     <div class="container mx-auto px-4">
       <div class="flex flex-col divide-y divide-neutral-800">
-        <a 
+        <button 
           *ngFor="let item of navItems" 
-          [href]="item.url" 
-          class="py-4 font-medium transition-all duration-200 relative overflow-hidden hover:pl-2"
+          (click)="navigateToAndCloseMenu(item.url)"
+          class="py-4 font-medium transition-all duration-200 relative overflow-hidden hover:pl-2 cursor-pointer w-full"
           [ngClass]="'text-center text-neutral-300 hover:text-accent-400'"
-          (click)="toggleMenu()"
         >
           <span>{{ item.name }}</span>
-        </a>
+        </button>
         
         <div class="py-4 text-center">
           <div (click)="navigateToAndCloseMenu('#contact')">
