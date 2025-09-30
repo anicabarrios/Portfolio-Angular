@@ -47,7 +47,6 @@ interface ComponentsVisibility {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
-
   @ViewChild('heroSection') heroSection!: ElementRef;
   @ViewChild('aboutSection') aboutSection!: ElementRef;
   @ViewChild('skillsSection') skillsSection!: ElementRef;
@@ -72,30 +71,46 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly isBrowser: boolean;
   private intersectionObserver?: IntersectionObserver;
   private loadingTimer?: ReturnType<typeof setTimeout>;
+  private resizeTimer?: ReturnType<typeof setTimeout>;
   private ticking = false;
-  private animatedComponents = new Set<string>();
+  private readonly animatedComponents = new Set<string>();
 
-  // Section mapping with staggered delays
-  private readonly sectionMap = new Map<string, { key: keyof ComponentsVisibility; delay: number }>([
-    ['about-section', { key: 'about', delay: 200 }],
-    ['skills-section', { key: 'skills', delay: 400 }],
-    ['projects-section', { key: 'projects', delay: 600 }],
-    ['contact-section', { key: 'contact', delay: 800 }],
-    ['footer-section', { key: 'footer', delay: 1000 }]
+  // Consolidated section configuration
+  private readonly sectionConfig = new Map<string, keyof ComponentsVisibility>([
+    ['about-section', 'about'],
+    ['skills-section', 'skills'],
+    ['projects-section', 'projects'],
+    ['contact-section', 'contact'],
+    ['footer-section', 'footer']
   ]);
+
+  private readonly ANIMATION_DELAY = 200;
+  private readonly LOADING_DURATION = 1200;
+  private readonly HERO_DELAY = 100;
+  private readonly OBSERVER_DELAY = 150;
+  private readonly WILL_CHANGE_CLEANUP_DELAY = 1000;
+  private readonly SCROLL_THRESHOLD = 500;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-    this.initializeScrollBehavior();
+    if (this.isBrowser) {
+      this.initializeScrollBehavior();
+    }
   }
 
   ngOnInit(): void {
     if (this.isBrowser) {
       document.body.classList.add('angular-ready');
-      this.initializeBrowser();
+      this.animationsEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (this.animationsEnabled) {
+        this.startLoadingSequence();
+      } else {
+        this.showAllContentImmediately();
+      }
     } else {
       this.handleSSR();
     }
@@ -103,7 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.isBrowser && this.animationsEnabled) {
-      setTimeout(() => this.setupIntersectionObserver(), 150);
+      this.scheduleTask(() => this.setupIntersectionObserver(), this.OBSERVER_DELAY);
     }
   }
 
@@ -112,21 +127,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private initializeScrollBehavior(): void {
-    if (this.isBrowser && 'scrollRestoration' in history) {
+    if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
-      window.scrollTo(0, 0);
     }
-  }
-
-  private initializeBrowser(): void {
-    this.animationsEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!this.animationsEnabled) {
-      this.showAllContentImmediately();
-      return;
-    }
-
-    this.startLoadingSequence();
+    window.scrollTo(0, 0);
   }
 
   private handleSSR(): void {
@@ -135,59 +139,49 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private startLoadingSequence(): void {
-    this.pageLoaded = false;
     this.setAllComponentsVisible(false);
-
-    setTimeout(() => window.scrollTo(0, 0), 0);
-    this.loadingTimer = setTimeout(() => this.completeLoading(), 1200);
+    this.scheduleTask(() => window.scrollTo(0, 0), 0);
+    this.loadingTimer = this.scheduleTask(() => this.completeLoading(), this.LOADING_DURATION);
   }
 
   private completeLoading(): void {
     this.pageLoaded = true;
     this.cdr.detectChanges();
-
-    setTimeout(() => this.showHeroSection(), 100);
+    this.scheduleTask(() => this.showHeroSection(), this.HERO_DELAY);
   }
 
   private showHeroSection(): void {
-    this.componentsVisible.hero = true;
-    this.animatedComponents.add('hero');
-
+    this.setComponentVisible('hero');
     const heroEl = this.heroSection?.nativeElement as HTMLElement;
-    if (heroEl) {
-      heroEl.classList.add('visible-after-loader');
-    }
-
+    heroEl?.classList.add('visible-after-loader');
     this.cdr.detectChanges();
   }
 
   private showAllContentImmediately(): void {
     this.pageLoaded = true;
     this.setAllComponentsVisible(true);
-
+    
     Object.keys(this.componentsVisible).forEach(comp => {
       this.animatedComponents.add(comp);
     });
 
-    setTimeout(() => {
+    this.scheduleTask(() => {
       const heroEl = this.heroSection?.nativeElement as HTMLElement;
-      if (heroEl) {
-        heroEl.classList.add('visible-after-loader');
-      }
+      heroEl?.classList.add('visible-after-loader');
     }, 0);
 
     this.cdr.detectChanges();
   }
 
   private setAllComponentsVisible(visible: boolean): void {
-    this.componentsVisible = {
-      hero: visible,
-      about: visible,
-      skills: visible,
-      projects: visible,
-      contact: visible,
-      footer: visible
-    };
+    Object.keys(this.componentsVisible).forEach(key => {
+      this.componentsVisible[key as keyof ComponentsVisibility] = visible;
+    });
+  }
+
+  private setComponentVisible(key: keyof ComponentsVisibility): void {
+    this.componentsVisible[key] = true;
+    this.animatedComponents.add(key);
   }
 
   private setupIntersectionObserver(): void {
@@ -196,99 +190,91 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       rootMargin: '0px 0px -80px 0px'
     };
 
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => entries.forEach(entry => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
           this.handleIntersection(entry.target);
         }
-      });
-    }, options);
+      }),
+      options
+    );
 
     this.observeSections();
   }
 
   private observeSections(): void {
     const sections = [
-      this.aboutSection?.nativeElement,
-      this.skillsSection?.nativeElement,
-      this.projectsSection?.nativeElement,
-      this.contactSection?.nativeElement,
-      this.footerSection?.nativeElement
-    ].filter(Boolean);
+      this.aboutSection,
+      this.skillsSection,
+      this.projectsSection,
+      this.contactSection,
+      this.footerSection
+    ]
+      .filter(Boolean)
+      .map(ref => ref.nativeElement);
 
     sections.forEach(element => {
-      if (this.intersectionObserver) {
-        this.intersectionObserver.observe(element);
-        element.style.willChange = 'transform, opacity';
-      }
+      this.intersectionObserver?.observe(element);
+      element.style.willChange = 'transform, opacity';
     });
   }
 
   private handleIntersection(target: Element): void {
-    const sectionInfo = this.getSectionInfo(target);
+    const sectionKey = this.getSectionKey(target);
 
-    if (sectionInfo && !this.animatedComponents.has(sectionInfo.key)) {
-      setTimeout(() => {
-        this.componentsVisible[sectionInfo.key] = true;
-        this.animatedComponents.add(sectionInfo.key);
+    if (sectionKey && !this.animatedComponents.has(sectionKey)) {
+      this.scheduleTask(() => {
+        this.setComponentVisible(sectionKey);
         this.cdr.detectChanges();
 
-        setTimeout(() => {
+        this.scheduleTask(() => {
           (target as HTMLElement).style.willChange = 'auto';
-        }, 1000);
-
-      }, Math.min(sectionInfo.delay, 200));
+        }, this.WILL_CHANGE_CLEANUP_DELAY);
+      }, this.ANIMATION_DELAY);
 
       this.intersectionObserver?.unobserve(target);
     }
   }
 
-  private getSectionInfo(target: Element): { key: keyof ComponentsVisibility; delay: number } | null {
+  private getSectionKey(target: Element): keyof ComponentsVisibility | null {
     const classList = Array.from(target.classList);
-
-    for (const [className, sectionInfo] of this.sectionMap) {
+    
+    for (const [className, key] of this.sectionConfig) {
       if (classList.includes(className)) {
-        return sectionInfo;
+        return key;
       }
     }
-
+    
     return null;
   }
 
   @HostListener('window:scroll')
   onScroll(): void {
-    if (!this.isBrowser || this.ticking) return;
-
-    this.ticking = true;
-    requestAnimationFrame(() => {
-      this.updateScrollEffects();
-      this.ticking = false;
-    });
+    if (!this.ticking) {
+      this.ticking = true;
+      requestAnimationFrame(() => {
+        this.updateScrollEffects();
+        this.ticking = false;
+      });
+    }
   }
 
   private updateScrollEffects(): void {
     const scrollTop = window.pageYOffset;
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-    this.scrollProgress = documentHeight > 0 ?
-      Math.min(Math.max((scrollTop / documentHeight) * 100, 0), 100) : 0;
+    this.scrollProgress = documentHeight > 0
+      ? Math.min(Math.max((scrollTop / documentHeight) * 100, 0), 100)
+      : 0;
 
-    const newShowBackToTop = scrollTop > 500;
-    if (newShowBackToTop !== this.showBackToTop) {
-      this.showBackToTop = newShowBackToTop;
-    }
+    this.showBackToTop = scrollTop > this.SCROLL_THRESHOLD;
   }
 
   scrollToTop(): void {
     if (this.isBrowser) {
-      const scrollOptions: ScrollToOptions = {
-        top: 0,
-        behavior: 'smooth'
-      };
-
       try {
-        window.scrollTo(scrollOptions);
-      } catch (error) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch {
         window.scrollTo(0, 0);
       }
     }
@@ -298,45 +284,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.isBrowser) return;
 
     try {
-      this.createDownloadLink();
+      const link = document.createElement('a');
+      link.href = 'assets/resume/Resume-Anica-Barrios.pdf';
+      link.download = 'Anica-Barrios-Resume.pdf';
+      link.style.display = 'none';
+
+      document.body.appendChild(link);
+      link.click();
+
+      this.scheduleTask(() => {
+        if (document.body.contains(link)) {
+          document.body.removeChild(link);
+        }
+      }, 100);
     } catch (error) {
       console.warn('Download failed, opening in new tab:', error);
       window.open('assets/resume/Resume-Anica-Barrios.pdf', '_blank');
-    }
-  }
-
-  private createDownloadLink(): void {
-    const link = document.createElement('a');
-    link.href = 'assets/resume/Resume-Anica-Barrios.pdf';
-    link.download = 'Anica-Barrios-Resume.pdf';
-    link.style.display = 'none';
-
-    document.body.appendChild(link);
-    link.click();
-
-    setTimeout(() => {
-      if (document.body.contains(link)) {
-        document.body.removeChild(link);
-      }
-    }, 100);
-  }
-
-  private cleanup(): void {
-    if (this.loadingTimer) {
-      clearTimeout(this.loadingTimer);
-    }
-
-    if (this.intersectionObserver) {
-      this.intersectionObserver.disconnect();
-    }
-
-    this.animatedComponents.clear();
-
-    if (this.isBrowser) {
-      const animatedElements = document.querySelectorAll('[style*="will-change"]');
-      animatedElements.forEach(el => {
-        (el as HTMLElement).style.willChange = 'auto';
-      });
     }
   }
 
@@ -350,11 +313,35 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('window:resize')
   onResize(): void {
-    if (this.isBrowser && this.ticking) {
-      clearTimeout(this.loadingTimer);
-      this.loadingTimer = setTimeout(() => {
+    if (this.isBrowser) {
+      clearTimeout(this.resizeTimer);
+      this.resizeTimer = this.scheduleTask(() => {
         this.updateScrollEffects();
       }, 150);
     }
+  }
+
+  private cleanup(): void {
+    this.clearTimer(this.loadingTimer);
+    this.clearTimer(this.resizeTimer);
+    
+    this.intersectionObserver?.disconnect();
+    this.animatedComponents.clear();
+
+    if (this.isBrowser) {
+      document.querySelectorAll('[style*="will-change"]').forEach(el => {
+        (el as HTMLElement).style.willChange = 'auto';
+      });
+    }
+  }
+
+  private clearTimer(timer?: ReturnType<typeof setTimeout>): void {
+    if (timer) {
+      clearTimeout(timer);
+    }
+  }
+
+  private scheduleTask<T>(callback: () => T, delay: number): ReturnType<typeof setTimeout> {
+    return setTimeout(callback, delay);
   }
 }

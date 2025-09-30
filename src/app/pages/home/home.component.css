@@ -1,16 +1,43 @@
-/* Base styles */
-html, body {
+/* Base styles  */
+html,
+body,
+.page-content,
+app-header,
+.hero-section,
+.animated-component,
+.about-section,
+.skills-section,
+.projects-section,
+.contact-section,
+app-hero,
+app-about,
+app-skills,
+app-projects,
+app-contact,
+app-footer {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  width: 100%;
+}
+
+html {
   scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 /* Page Loader */
 .page-loader {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100vh;
   background: linear-gradient(135deg, #171717 0%, #2f4550 50%, #171717 100%);
@@ -19,6 +46,7 @@ html, body {
   justify-content: center;
   z-index: 10000;
   transition: opacity 0.5s ease, visibility 0.5s ease;
+  overflow: hidden;
 }
 
 .page-loader.hide {
@@ -60,7 +88,7 @@ html, body {
   width: 60px;
   height: 60px;
   border: 3px solid rgba(154, 212, 214, 0.2);
-  border-top: 3px solid #9ad4d6;
+  border-top-color: #9ad4d6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1.5rem;
@@ -86,33 +114,30 @@ html, body {
   letter-spacing: 0.025em;
 }
 
-/* Page content states */
-.page-content {
+/* Page content and header states  */
+.page-content,
+app-header {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px);
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100%;
 }
 
-.page-content.loaded {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+.page-content {
+  transform: translateY(20px);
 }
 
-/* Header states */
 app-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
   transform: translateY(-100%);
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 0.6s;
 }
 
+.page-content.loaded,
 app-header.loaded {
   opacity: 1;
   visibility: visible;
@@ -123,6 +148,7 @@ app-header.loaded {
 .page-wrapper .hero-section {
   opacity: 0;
   visibility: hidden;
+  width: 100%;
 }
 
 .page-wrapper .hero-section.visible-after-loader {
@@ -131,51 +157,72 @@ app-header.loaded {
   transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
 }
 
-/* Component animation states */
+/* Component animation states - Consolidated */
 .animated-component {
   opacity: 0;
   transform: translateY(60px);
   will-change: transform, opacity;
   backface-visibility: hidden;
   perspective: 1000px;
-}
-
-.component-hidden {
-  opacity: 0;
-  transform: translateY(60px);
+  width: 100%;
+  position: relative;
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .component-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Footer section  */
+.footer-section {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+.footer-section.component-hidden,
 .footer-hidden {
   opacity: 0;
-  transition: opacity 0.8s ease-out;
+  transform: none !important;
+  transition: opacity 1s ease-out;
+}
+
+.footer-section.component-visible {
+  opacity: 1;
+  transform: none !important;
+  transition: opacity 1s ease-out;
 }
 
 /* Animation classes */
 .animate-footer-slide {
-  animation: footerSlideIn 1.0s ease-out forwards;
+  animation: footerFadeIn 1.0s ease-out forwards !important;
 }
 
-.animate-slide-in-delayed {
-  animation: slideInFromBottomDelayed 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.animate-slide-scale {
-  animation: slideInScale 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+.animate-slide-in-delayed,
+.animate-fade-in-up,
+.animate-slide-scale,
+.animate-slide-in-bottom {
+  animation-duration: 1.0s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: forwards;
 }
 
 .animate-slide-in-bottom {
-  animation: slideInFromBottom 1.0s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-name: slideInFromBottom;
+}
+
+.animate-slide-in-delayed {
+  animation-name: slideInFromBottomDelayed;
+}
+
+.animate-fade-in-up {
+  animation-name: fadeInUp;
+}
+
+.animate-slide-scale {
+  animation-name: slideInScale;
 }
 
 /* Scroll progress indicator */
@@ -190,6 +237,7 @@ app-header.loaded {
   opacity: 0;
   transition: opacity 0.4s ease;
   backdrop-filter: blur(10px);
+  overflow: hidden;
 }
 
 .scroll-progress-container.visible {
@@ -200,9 +248,10 @@ app-header.loaded {
   height: 100%;
   background: linear-gradient(90deg, #586f7c 0%, #9ad4d6 50%, #586f7c 100%);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 
-    0 0 15px rgba(154, 212, 214, 0.6),
-    0 2px 8px rgba(154, 212, 214, 0.3);
+  box-shadow: 0 0 15px rgba(154, 212, 214, 0.6), 0 2px 8px rgba(154, 212, 214, 0.3);
+  max-width: 100%;
+  transform: translateZ(0);
+  will-change: transform, opacity;
 }
 
 /* Back to top button */
@@ -222,14 +271,13 @@ app-header.loaded {
   justify-content: center;
   z-index: 100;
   opacity: 0;
-  transform: translateY(30px) scale(0.8);
+  transform: translateY(30px) scale(0.8) translateZ(0);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.15),
-    0 4px 15px rgba(88, 111, 124, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(88, 111, 124, 0.2);
   outline: none;
   pointer-events: none;
   backdrop-filter: blur(10px);
+  will-change: transform, opacity;
 }
 
 .back-to-top-btn::before {
@@ -245,15 +293,13 @@ app-header.loaded {
 
 .back-to-top-btn.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0) scale(1) translateZ(0);
   pointer-events: auto;
 }
 
 .back-to-top-btn:hover {
-  transform: translateY(-4px) scale(1.1);
-  box-shadow: 
-    0 15px 40px rgba(0, 0, 0, 0.2),
-    0 8px 25px rgba(88, 111, 124, 0.3);
+  transform: translateY(-4px) scale(1.1) translateZ(0);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 8px 25px rgba(88, 111, 124, 0.3);
 }
 
 .back-to-top-btn:hover::before {
@@ -261,7 +307,7 @@ app-header.loaded {
 }
 
 .back-to-top-btn:active {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-2px) scale(1.05) translateZ(0);
   transition: transform 0.1s ease;
 }
 
@@ -275,70 +321,39 @@ app-header.loaded {
   transform: translateY(-2px);
 }
 
-/* Keyframes */
+/* Keyframes  */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes float-gentle {
-  0%, 100% { transform: translateY(0px) scale(1); }
+  0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-15px) scale(1.05); }
 }
 
 @keyframes slideInFromBottom {
-  0% { 
-    opacity: 0; 
-    transform: translateY(60px) scale(0.98);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(60px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes slideInFromBottomDelayed {
-  0% { 
-    opacity: 0; 
-    transform: translateY(50px) scale(0.98);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(50px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes fadeInUp {
-  0% { 
-    opacity: 0; 
-    transform: translateY(40px) scale(0.98);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes slideInScale {
-  0% { 
-    opacity: 0; 
-    transform: translateY(50px) scale(0.95);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(50px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@keyframes footerSlideIn {
-  0% { 
-    opacity: 0; 
-    transform: translateY(40px);
-  }
-  100% { 
-    opacity: 1; 
-    transform: translateY(0);
-  }
+@keyframes footerFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Component transitions */
@@ -348,6 +363,7 @@ app-header.loaded {
 .contact-section {
   position: relative;
   isolation: isolate;
+  width: 100%;
 }
 
 .about-section.component-visible,
@@ -357,14 +373,32 @@ app-header.loaded {
   animation-fill-mode: both;
 }
 
-/* Responsive design */
+/* Angular components  */
+app-hero,
+app-about,
+app-skills,
+app-projects,
+app-contact,
+app-footer {
+  display: block;
+  width: 100% !important;
+  position: relative;
+  margin: 0;
+}
+
+app-footer,
+app-footer *,
+app-footer .container,
+app-footer .footer-grid,
+app-footer > * {
+  transform: none !important;
+  max-width: 100% !important;
+}
+
+/* Responsive design  */
 @media (max-width: 640px) {
-  .component-hidden {
+  .component-hidden:not(.footer-section) {
     transform: translateY(40px);
-  }
-  
-  .footer-hidden {
-    transform: translateY(30px);
   }
   
   .loader-spinner {
@@ -400,13 +434,13 @@ app-header.loaded {
     height: 3.25rem;
   }
   
-  .component-hidden {
+  .component-hidden:not(.footer-section) {
     transform: translateY(50px);
   }
 }
 
 @media (min-width: 1025px) {
-  .component-hidden {
+  .component-hidden:not(.footer-section) {
     transform: translateY(60px);
   }
   
@@ -416,7 +450,7 @@ app-header.loaded {
   }
 }
 
-/* Reduced motion */
+/* Reduced motion  */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -426,16 +460,14 @@ app-header.loaded {
     display: none;
   }
   
-  /* Reset all animations and transitions */
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms;
-    animation-iteration-count: 1;
-    transition-duration: 0.01ms;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
   
-  /* Show content immediately */
   .page-content,
   app-header,
   .animated-component,
@@ -443,9 +475,9 @@ app-header.loaded {
   .footer-hidden,
   .page-wrapper .hero-section,
   .back-to-top-btn {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
     pointer-events: auto;
   }
 }
@@ -472,14 +504,6 @@ app-header.loaded {
   .loader-spinner {
     border-color: #9ad4d6;
   }
-}
-
-/* Performance optimizations */
-.animated-component,
-.back-to-top-btn,
-.scroll-progress-bar {
-  transform: translateZ(0);
-  will-change: transform, opacity;
 }
 
 /* Focus states for accessibility */
