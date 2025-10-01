@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Add these to your global styles.css or a dedicated styles file */
 @keyframes blob {
     0% {
       transform: translate(0px, 0px) scale(1);
