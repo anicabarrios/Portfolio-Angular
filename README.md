@@ -9,6 +9,13 @@ A modern, responsive portfolio website built with Angular 19, showcasing full-st
 
 🌐 **Live Demo:** [Live Demo](https://portfolio-anica-barrios.vercel.app/)
 
+
+
+## 📸 Screenshot
+
+![Portfolio Screenshot](/public/images/portfolio-screenshot.png)
+
+
 ## ✨ Key Features
 
 - **Server-Side Rendering** - Optimized SEO and fast initial page loads
