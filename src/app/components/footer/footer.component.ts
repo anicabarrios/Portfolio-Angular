@@ -12,7 +12,7 @@ export class FooterComponent {
   private readonly isBrowser: boolean;
 
   quickLinks = [
-      { 
+    { 
       name: 'About', 
       url: '#about', 
       icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' 
@@ -90,14 +90,14 @@ export class FooterComponent {
 
     try {
       const link = document.createElement('a');
-      link.href = '/resume/Resume-Anica-Barrios.pdf';
+      link.href = 'assets/resume/Resume-Anica-Barrios.pdf';
       link.download = 'Anica-Barrios-Resume.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
       console.error('Resume download failed:', error);
-      window.open('/resume/Resume-Anica-Barrios.pdf', '_blank');
+      window.open('assets/resume/Resume-Anica-Barrios.pdf', '_blank');
     }
   }
 

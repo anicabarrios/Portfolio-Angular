@@ -1,32 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+/* ================================================
+   Tailwind Core Imports
+   ================================================ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@keyframes blob {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
+/* ================================================
+   Global Layout & Scaling Fixes
+   ================================================ */
+html,
+body {
+  @apply w-full h-full overflow-x-hidden text-base text-gray-900 antialiased;
+  font-size: 100%; /* Keeps font sizes consistent across devices */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  zoom: 1; /* Prevent browser auto-zoom */
+}
+
+#app-root,
+app-root {
+  @apply flex flex-col min-h-screen w-full;
+}
+
+/* Prevent stretching or shrinking on ultra-wide and 4K screens */
+@media screen and (min-width: 2560px) {
+  html {
+    font-size: 90%;
   }
-  
-  .animate-blob {
-    animation: blob 7s infinite;
+}
+
+/* Stabilize SSR → Client transitions (reduces flicker and scaling jump) */
+* {
+  @apply box-border;
+  transform: translateZ(0);
+}
+
+/* ================================================
+   High-DPI & Browser Zoom Stabilization
+   ================================================ */
+
+/* Keep proportions consistent on Retina & 4K displays */
+@media (resolution: 2dppx), (min-resolution: 192dpi) {
+  html {
+    transform: scale(0.98);
+    transform-origin: top left;
   }
-  
-  .animation-delay-2000 {
-    animation-delay: 2s;
+
+  body {
+    transform: scale(1.02);
+    transform-origin: top left;
   }
-  
-  .animation-delay-4000 {
-    animation-delay: 4s;
+}
+
+/* Normalize for fractional Windows zoom levels (125%–150%) */
+@media (min-resolution: 1.25dppx) and (max-resolution: 1.75dppx) {
+  html {
+    transform: scale(1);
   }
-  
+}
+
+/* Prevent double transforms on nested components */
+body * {
+  transform: none !important;
+}
