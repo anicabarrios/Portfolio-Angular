@@ -90,7 +90,7 @@ export class FooterComponent {
 
     try {
       const link = document.createElement('a');
-      link.href = 'assets/resume/Resume-Anica-Barrios.pdf';
+      link.href = 'resume/Resume-Anica-Barrios.pdf';
       link.download = 'Anica-Barrios-Resume.pdf';
       document.body.appendChild(link);
       link.click();

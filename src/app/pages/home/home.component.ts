@@ -75,7 +75,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private ticking = false;
   private readonly animatedComponents = new Set<string>();
 
-  // Consolidated section configuration
   private readonly sectionConfig = new Map<string, keyof ComponentsVisibility>([
     ['about-section', 'about'],
     ['skills-section', 'skills'],
@@ -126,28 +125,30 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cleanup();
   }
 
+
   private initializeScrollBehavior(): void {
     if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
+      history.scrollRestoration = 'auto';
     }
-    window.scrollTo(0, 0);
   }
 
   private handleSSR(): void {
     this.pageLoaded = true;
     this.setAllComponentsVisible(true);
   }
-
   private startLoadingSequence(): void {
     this.setAllComponentsVisible(false);
-    this.scheduleTask(() => window.scrollTo(0, 0), 0);
     this.loadingTimer = this.scheduleTask(() => this.completeLoading(), this.LOADING_DURATION);
   }
 
   private completeLoading(): void {
     this.pageLoaded = true;
     this.cdr.detectChanges();
-    this.scheduleTask(() => this.showHeroSection(), this.HERO_DELAY);
+
+    this.scheduleTask(() => {
+      this.showHeroSection();
+      this.updateScrollEffects(); 
+    }, this.HERO_DELAY);
   }
 
   private showHeroSection(): void {
@@ -302,12 +303,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       window.open('assets/resume/Resume-Anica-Barrios.pdf', '_blank');
     }
   }
-
   @HostListener('window:beforeunload')
   @HostListener('window:popstate')
   onNavigationEvents(): void {
     if (this.isBrowser) {
-      window.scrollTo(0, 0);
     }
   }
 

@@ -1,54 +1,46 @@
-<header class="fixed w-full z-50 transition-all duration-500" 
-        [ngClass]="scrolled 
-          ? 'py-3 backdrop-blur-md bg-neutral-900/80 shadow-lg' 
-          : 'py-5 bg-transparent'">
-  <div class="container relative mx-auto px-4">
+<header class="header-main" [class.scrolled]="scrolled">
+  <div class="container mx-auto px-4">
     <div class="flex justify-between items-center">
-      <button 
-         (click)="navigateTo('#')"
-         class="text-3xl font-bold font-heading relative group transition-all duration-300 text-center sm:text-center md:text-left lg:text-left w-full sm:w-full md:w-auto lg:w-auto cursor-pointer"
-         [ngClass]="scrolled ? 'text-light' : 'text-light'">
-        <span class="relative z-10">Anica Barrios</span>
-        <span class="absolute bottom-0 left-0 right-0 mx-auto lg:mx-0 lg:right-auto w-0 h-0.5 bg-gradient-to-r from-primary-800 to-accent-400 transition-all duration-300 group-hover:w-full"></span>
-      </button>
       
-      <!-- Mobile Menu Button  -->
+      <!-- Logo -->
+      <a href="#" 
+         class="header-logo text-3xl font-bold text-white relative group transition-all duration-300"
+         (click)="navigateTo('#'); $event.preventDefault()">
+        <span class="relative z-10">Anica Barrios</span>
+        <span class="header-logo-underline"></span>
+      </a>
+      
+      <!-- Mobile Menu Button -->
       <button 
         (click)="toggleMenu()" 
-        class="lg:hidden focus:outline-none rounded-lg p-2 transition-all duration-300 hover:text-accent-400 absolute right-4"
-        [ngClass]="scrolled 
-          ? 'text-light' 
-          : 'text-light'"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path *ngIf="!menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        class="mobile-menu-btn lg:hidden"
+        [attr.aria-expanded]="menuOpen"
+        aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path *ngIf="!menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           <path *ngIf="menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
       
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center space-x-6">
-        <button 
+        <a 
           *ngFor="let item of navItems" 
-          (click)="navigateTo(item.url)"
-          class="relative py-2 px-1 font-medium transition-all duration-300 overflow-hidden group cursor-pointer"
-          [ngClass]="scrolled 
-            ? 'text-neutral-300 hover:text-accent-400' 
-            : 'text-neutral-200 hover:text-accent-400'"
-        >
+          [href]="item.url" 
+          (click)="navigateTo(item.url); $event.preventDefault()"
+          class="nav-link relative group">
           <span class="relative z-10">{{ item.name }}</span>
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-700 to-accent-400 transition-all duration-300 group-hover:w-full"></span>
-        </button>
+          <span class="nav-link-underline"></span>
+        </a>
         
-        <!-- Contact button -->
-        <div (click)="navigateTo('#contact')">
+        <div (click)="navigateTo('#contact')" class="ml-2">
           <app-button variant="outline" size="sm">Contact Me</app-button>
         </div>
       </nav>
     </div>
   </div>
 
-  <!-- Mobile Navigation Menu -->
+  <!-- Mobile Navigation -->
   <div 
     *ngIf="menuOpen" 
     class="lg:hidden w-full absolute left-0 right-0 top-full transition-all duration-300 transform origin-top"

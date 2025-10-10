@@ -1,50 +1,39 @@
-/* Base styles  */
-html,
-body,
-.page-content,
-app-header,
-.hero-section,
-.animated-component,
-.about-section,
-.skills-section,
-.projects-section,
-.contact-section,
-app-hero,
-app-about,
-app-skills,
-app-projects,
-app-contact,
-app-footer {
-  overflow-x: hidden !important;
-  max-width: 100vw;
-}
 
 html,
 body {
   margin: 0;
   padding: 0;
   width: 100%;
-}
-
-html {
+  max-width: 100vw;
+  overflow-x: hidden;
   scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+/* Prevent any horizontal overflow */
+body {
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Page Loader */
 .page-loader {
   position: fixed;
   inset: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background: linear-gradient(135deg, #171717 0%, #2f4550 50%, #171717 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: 99999;
   transition: opacity 0.5s ease, visibility 0.5s ease;
   overflow: hidden;
 }
@@ -76,12 +65,13 @@ html {
   animation: float-gentle 4s ease-in-out infinite;
 }
 
-/* Loader components */
+/* Loader Components */
 .loader-content {
   text-align: center;
   color: white;
   position: relative;
   z-index: 2;
+  padding: 1rem;
 }
 
 .loader-spinner {
@@ -96,7 +86,7 @@ html {
 }
 
 .loader-text {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
   font-weight: 700;
   margin-bottom: 0.5rem;
   background: linear-gradient(90deg, #9ad4d6 0%, #ffffff 50%, #9ad4d6 100%);
@@ -107,66 +97,72 @@ html {
 }
 
 .loader-subtext {
-  font-size: 0.9375rem;
+  font-size: clamp(0.875rem, 3vw, 0.9375rem);
   opacity: 0.8;
   color: #9ad4d6;
   font-weight: 500;
   letter-spacing: 0.025em;
 }
 
-/* Page content and header states  */
-.page-content,
-app-header {
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  width: 100%;
-}
-
-.page-content {
-  transform: translateY(20px);
-}
-
-app-header {
+/* SCROLL PROGRESS BAR  */
+.scroll-progress-container {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  transform: translateY(-100%);
-  transition-duration: 0.6s;
+  width: 100%;
+  height: 4px;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.page-content.loaded,
-app-header.loaded {
+.scroll-progress-container.visible {
   opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
 }
 
-/* Hero section */
-.page-wrapper .hero-section {
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #586f7c 0%, #9ad4d6 50%, #586f7c 100%);
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 15px rgba(154, 212, 214, 0.6), 0 2px 8px rgba(154, 212, 214, 0.3);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Page Content Container */
+.page-content {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   opacity: 0;
   visibility: hidden;
-  width: 100%;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(20px);
+  position: relative;
+  z-index: 1;
 }
 
-.page-wrapper .hero-section.visible-after-loader {
+.page-content.loaded {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+  transform: none;
 }
 
-/* Component animation states - Consolidated */
+/* Section Containers */
 .animated-component {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
   opacity: 0;
   transform: translateY(60px);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  perspective: 1000px;
-  width: 100%;
-  position: relative;
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
 }
 
 .component-visible {
@@ -174,12 +170,69 @@ app-header.loaded {
   transform: translateY(0);
 }
 
-/* Footer section  */
+.component-hidden {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+/* Hero Section */
+.hero-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section.visible-after-loader {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease-out 0.2s, visibility 0.6s ease-out 0.2s;
+}
+
+/* All Sections */
+.about-section,
+.skills-section,
+.projects-section,
+.contact-section,
 .footer-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Angular Component Hosts */
+app-header,
+app-hero,
+app-about,
+app-skills,
+app-projects,
+app-contact,
+app-footer {
+  display: block;
   width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  position: relative;
+  margin: 0;
+}
+
+/* Ensure header doesn't interfere */
+app-header {
+  position: static;
+}
+
+/* Footer specific styles */
+app-footer,
+app-footer *,
+app-footer .container,
+app-footer .footer-grid {
   transform: none !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 .footer-section.component-hidden,
@@ -195,16 +248,82 @@ app-header.loaded {
   transition: opacity 1s ease-out;
 }
 
-/* Animation classes */
+/* Back to Top Button */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #586f7c 0%, #9ad4d6 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(30px) scale(0.8);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(88, 111, 124, 0.2);
+  outline: none;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+.back-to-top-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #9ad4d6, #586f7c, #9ad4d6);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.back-to-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 8px 25px rgba(88, 111, 124, 0.3);
+}
+
+.back-to-top-btn:hover::before {
+  opacity: 0.7;
+}
+
+.back-to-top-btn:active {
+  transform: translateY(-2px) scale(1.05);
+  transition: transform 0.1s ease;
+}
+
+.back-to-top-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.back-to-top-btn:hover .back-to-top-icon {
+  transform: translateY(-2px);
+}
+
+/* Animation Classes */
 .animate-footer-slide {
-  animation: footerFadeIn 1.0s ease-out forwards !important;
+  animation: footerFadeIn 1s ease-out forwards !important;
 }
 
 .animate-slide-in-delayed,
 .animate-fade-in-up,
 .animate-slide-scale,
 .animate-slide-in-bottom {
-  animation-duration: 1.0s;
+  animation-duration: 1s;
   animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation-fill-mode: forwards;
 }
@@ -225,180 +344,87 @@ app-header.loaded {
   animation-name: slideInScale;
 }
 
-/* Scroll progress indicator */
-.scroll-progress-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  z-index: 1001;
-  background: rgba(0, 0, 0, 0.05);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  backdrop-filter: blur(10px);
-  overflow: hidden;
-}
-
-.scroll-progress-container.visible {
-  opacity: 1;
-}
-
-.scroll-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #586f7c 0%, #9ad4d6 50%, #586f7c 100%);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 0 15px rgba(154, 212, 214, 0.6), 0 2px 8px rgba(154, 212, 214, 0.3);
-  max-width: 100%;
-  transform: translateZ(0);
-  will-change: transform, opacity;
-}
-
-/* Back to top button */
-.back-to-top-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 3.5rem;
-  height: 3.5rem;
-  background: linear-gradient(135deg, #586f7c 0%, #9ad4d6 100%);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  opacity: 0;
-  transform: translateY(30px) scale(0.8) translateZ(0);
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(88, 111, 124, 0.2);
-  outline: none;
-  pointer-events: none;
-  backdrop-filter: blur(10px);
-  will-change: transform, opacity;
-}
-
-.back-to-top-btn::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(45deg, #9ad4d6, #586f7c, #9ad4d6);
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.back-to-top-btn.visible {
-  opacity: 1;
-  transform: translateY(0) scale(1) translateZ(0);
-  pointer-events: auto;
-}
-
-.back-to-top-btn:hover {
-  transform: translateY(-4px) scale(1.1) translateZ(0);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 8px 25px rgba(88, 111, 124, 0.3);
-}
-
-.back-to-top-btn:hover::before {
-  opacity: 0.7;
-}
-
-.back-to-top-btn:active {
-  transform: translateY(-2px) scale(1.05) translateZ(0);
-  transition: transform 0.1s ease;
-}
-
-.back-to-top-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.back-to-top-btn:hover .back-to-top-icon {
-  transform: translateY(-2px);
-}
-
-/* Keyframes  */
+/* Keyframes */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes float-gentle {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-15px) scale(1.05); }
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05);
+  }
 }
 
 @keyframes slideInFromBottom {
-  from { opacity: 0; transform: translateY(60px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes slideInFromBottomDelayed {
-  from { opacity: 0; transform: translateY(50px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes slideInScale {
-  from { opacity: 0; transform: translateY(50px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes footerFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Component transitions */
-.about-section,
-.skills-section,
-.projects-section,
-.contact-section {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-}
+/* ================================================
+   RESPONSIVE DESIGN - MOBILE FIRST
+   ================================================ */
 
-.about-section.component-visible,
-.skills-section.component-visible,
-.projects-section.component-visible,
-.contact-section.component-visible {
-  animation-fill-mode: both;
-}
-
-/* Angular components  */
-app-hero,
-app-about,
-app-skills,
-app-projects,
-app-contact,
-app-footer {
-  display: block;
-  width: 100% !important;
-  position: relative;
-  margin: 0;
-}
-
-app-footer,
-app-footer *,
-app-footer .container,
-app-footer .footer-grid,
-app-footer > * {
-  transform: none !important;
-  max-width: 100% !important;
-}
-
-/* Responsive design  */
-@media (max-width: 640px) {
+/* Extra Small Devices (Portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .scroll-progress-container {
+    height: 3px;
+  }
+  
   .component-hidden:not(.footer-section) {
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
   
   .loader-spinner {
@@ -407,13 +433,9 @@ app-footer > * {
     border-width: 2px;
   }
   
-  .loader-text {
-    font-size: 1.25rem;
-  }
-  
   .back-to-top-btn {
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: 1rem;
+    right: 1rem;
     width: 3rem;
     height: 3rem;
   }
@@ -423,34 +445,88 @@ app-footer > * {
     height: 1.25rem;
   }
   
-  .scroll-progress-container {
-    height: 3px;
+  .animated-component {
+    transform: translateY(40px);
   }
 }
 
-@media (min-width: 641px) and (max-width: 1024px) {
+/* Small Devices (Landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .scroll-progress-container {
+    height: 3px;
+  }
+  
+  .component-hidden:not(.footer-section) {
+    transform: translateY(40px);
+  }
+  
   .back-to-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
     width: 3.25rem;
     height: 3.25rem;
+  }
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .scroll-progress-container {
+    height: 4px;
   }
   
   .component-hidden:not(.footer-section) {
     transform: translateY(50px);
   }
+  
+  .back-to-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.25rem;
+    height: 3.25rem;
+  }
 }
 
-@media (min-width: 1025px) {
+/* Large Devices (Desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .scroll-progress-container {
+    height: 4px;
+  }
+  
   .component-hidden:not(.footer-section) {
     transform: translateY(60px);
   }
   
   .back-to-top-btn {
+    bottom: 2rem;
+    right: 2rem;
     width: 3.5rem;
     height: 3.5rem;
   }
 }
 
-/* Reduced motion  */
+/* Extra Large Devices (Large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .scroll-progress-container {
+    height: 5px;
+  }
+  
+  .component-hidden:not(.footer-section) {
+    transform: translateY(60px);
+  }
+  
+  .back-to-top-btn {
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+/* ================================================
+   ACCESSIBILITY & PERFORMANCE
+   ================================================ */
+
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -469,12 +545,12 @@ app-footer > * {
   }
   
   .page-content,
-  app-header,
   .animated-component,
   .component-hidden,
   .footer-hidden,
-  .page-wrapper .hero-section,
-  .back-to-top-btn {
+  .hero-section,
+  .back-to-top-btn,
+  .scroll-progress-container {
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
@@ -482,7 +558,7 @@ app-footer > * {
   }
 }
 
-/* High contrast mode */
+/* High Contrast */
 @media (prefers-contrast: high) {
   .back-to-top-btn {
     background: #000000;
@@ -491,10 +567,12 @@ app-footer > * {
   
   .scroll-progress-bar {
     background: #9ad4d6;
+    box-shadow: none;
   }
   
   .scroll-progress-container {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid #9ad4d6;
   }
   
   .page-loader {
@@ -506,13 +584,13 @@ app-footer > * {
   }
 }
 
-/* Focus states for accessibility */
+/* Focus States */
 .back-to-top-btn:focus-visible {
   outline: 2px solid #9ad4d6;
   outline-offset: 3px;
 }
 
-/* Print styles */
+/* Print Styles */
 @media print {
   .page-loader,
   .back-to-top-btn,
@@ -525,4 +603,31 @@ app-footer > * {
     opacity: 1;
     transform: none;
   }
+  
+  body {
+    overflow: visible;
+  }
+}
+
+/* ================================================
+   UTILITY CLASSES FOR SCROLL PREVENTION
+   ================================================ */
+
+.no-horizontal-scroll {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+.container-fluid-safe {
+  width: 100%;
+  max-width: 100vw;
+  padding-left: clamp(1rem, 4vw, 2rem);
+  padding-right: clamp(1rem, 4vw, 2rem);
+  overflow-x: hidden;
+}
+
+/* Ensure Tailwind container classes don't cause overflow */
+.container {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
 }

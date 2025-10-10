@@ -1,65 +1,86 @@
-/* ================================================
-   Tailwind Core Imports
-   ================================================ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ================================================
-   Global Layout & Scaling Fixes
-   ================================================ */
-html,
-body {
-  @apply w-full h-full overflow-x-hidden text-base text-gray-900 antialiased;
-  font-size: 100%; /* Keeps font sizes consistent across devices */
+
+html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  zoom: 1; /* Prevent browser auto-zoom */
+  font-size: 100%;
+  overflow-x: hidden;
+  max-width: 100vw;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+html::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply text-base text-gray-900 antialiased;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 #app-root,
 app-root {
   @apply flex flex-col min-h-screen w-full;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-/* Prevent stretching or shrinking on ultra-wide and 4K screens */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+app-header,
+app-hero,
+app-about,
+app-skills,
+app-projects,
+app-contact,
+app-footer {
+  display: block;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+
+* {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
 @media screen and (min-width: 2560px) {
   html {
     font-size: 90%;
   }
-}
-
-/* Stabilize SSR → Client transitions (reduces flicker and scaling jump) */
-* {
-  @apply box-border;
-  transform: translateZ(0);
-}
-
-/* ================================================
-   High-DPI & Browser Zoom Stabilization
-   ================================================ */
-
-/* Keep proportions consistent on Retina & 4K displays */
-@media (resolution: 2dppx), (min-resolution: 192dpi) {
-  html {
-    transform: scale(0.98);
-    transform-origin: top left;
-  }
-
-  body {
-    transform: scale(1.02);
-    transform-origin: top left;
-  }
-}
-
-/* Normalize for fractional Windows zoom levels (125%–150%) */
-@media (min-resolution: 1.25dppx) and (max-resolution: 1.75dppx) {
-  html {
-    transform: scale(1);
-  }
-}
-
-/* Prevent double transforms on nested components */
-body * {
-  transform: none !important;
 }
