@@ -6,19 +6,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  font-size: 100%;
   overflow-x: hidden;
-  max-width: 100vw;
   scroll-behavior: smooth;
-
-  scrollbar-width: none; 
-  -ms-overflow-style: none;
-}
-
-/* Hide scrollbar for WebKit browsers (Chrome, Safari, etc.) */
-html::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
 }
 
 body {
@@ -29,29 +18,14 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-base text-gray-900 antialiased;
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
-}
-
-body::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
 }
 
 #app-root,
 app-root {
-  @apply flex flex-col min-h-screen w-full;
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
 }
 
 app-header,
@@ -63,19 +37,30 @@ app-contact,
 app-footer {
   display: block;
   width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
   position: relative;
 }
 
-
+html,
+body,
 * {
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
 *::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
+  width: 0;
+  height: 0;
+  display: none;
 }
+
+@layer base {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 

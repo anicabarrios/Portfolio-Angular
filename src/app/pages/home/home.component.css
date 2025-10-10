@@ -1,4 +1,3 @@
-
 html,
 body {
   margin: 0;
@@ -8,6 +7,7 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
   box-sizing: border-box;
+  font-size: 16px; 
 }
 
 *,
@@ -16,14 +16,16 @@ body {
   box-sizing: border-box;
 }
 
-/* Prevent any horizontal overflow */
 body {
   position: relative;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-/* Page Loader */
+/* ================
+   Page Loader 
+   ================ */
+
 .page-loader {
   position: fixed;
   inset: 0;
@@ -86,7 +88,7 @@ body {
 }
 
 .loader-text {
-  font-size: clamp(1.25rem, 4vw, 1.5rem);
+  font-size: 1.5rem; 
   font-weight: 700;
   margin-bottom: 0.5rem;
   background: linear-gradient(90deg, #9ad4d6 0%, #ffffff 50%, #9ad4d6 100%);
@@ -97,14 +99,17 @@ body {
 }
 
 .loader-subtext {
-  font-size: clamp(0.875rem, 3vw, 0.9375rem);
+  font-size: 0.9375rem; 
   opacity: 0.8;
   color: #9ad4d6;
   font-weight: 500;
   letter-spacing: 0.025em;
 }
 
-/* SCROLL PROGRESS BAR  */
+/* ================================================
+   Scroll Progress Bar
+   ================================================ */
+
 .scroll-progress-container {
   position: fixed;
   top: 0;
@@ -134,15 +139,17 @@ body {
   border-radius: 0 2px 2px 0;
 }
 
-/* Page Content Container */
+/* =================
+   Page Content - 
+   ================= */
+
 .page-content {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform: translateY(20px);
+  transition: opacity 0.8s ease, visibility 0.8s ease; 
   position: relative;
   z-index: 1;
 }
@@ -150,29 +157,31 @@ body {
 .page-content.loaded {
   opacity: 1;
   visibility: visible;
-  transform: none;
 }
 
-/* Section Containers */
+/* =============================
+   Component Animations 
+   ============================= */
+
 .animated-component {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
   position: relative;
   opacity: 0;
-  transform: translateY(60px);
+  transform: translateY(30px); 
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform, opacity;
 }
 
 .component-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0); 
 }
 
 .component-hidden {
   opacity: 0;
-  transform: translateY(60px);
+  transform: translateY(30px); 
 }
 
 /* Hero Section */
@@ -220,12 +229,11 @@ app-footer {
   margin: 0;
 }
 
-/* Ensure header doesn't interfere */
 app-header {
   position: static;
 }
 
-/* Footer specific styles */
+/* Footer */
 app-footer,
 app-footer *,
 app-footer .container,
@@ -248,7 +256,10 @@ app-footer .footer-grid {
   transition: opacity 1s ease-out;
 }
 
-/* Back to Top Button */
+/* ================================================
+   Back to Top Button
+   ================================================ */
+
 .back-to-top-btn {
   position: fixed;
   bottom: 2rem;
@@ -265,7 +276,7 @@ app-footer .footer-grid {
   justify-content: center;
   z-index: 9999;
   opacity: 0;
-  transform: translateY(30px) scale(0.8);
+  transform: translateY(10px); 
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(88, 111, 124, 0.2);
   outline: none;
@@ -286,12 +297,12 @@ app-footer .footer-grid {
 
 .back-to-top-btn.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0); 
   pointer-events: auto;
 }
 
 .back-to-top-btn:hover {
-  transform: translateY(-4px) scale(1.1);
+  transform: translateY(-4px); 
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 8px 25px rgba(88, 111, 124, 0.3);
 }
 
@@ -300,7 +311,7 @@ app-footer .footer-grid {
 }
 
 .back-to-top-btn:active {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-2px); 
   transition: transform 0.1s ease;
 }
 
@@ -314,7 +325,10 @@ app-footer .footer-grid {
   transform: translateY(-2px);
 }
 
-/* Animation Classes */
+/* =========================
+   Animation Classes 
+   =========================*/
+
 .animate-footer-slide {
   animation: footerFadeIn 1s ease-out forwards !important;
 }
@@ -344,7 +358,10 @@ app-footer .footer-grid {
   animation-name: slideInScale;
 }
 
-/* Keyframes */
+/* ==================
+   Keyframes 
+   ==================*/
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -353,54 +370,54 @@ app-footer .footer-grid {
 
 @keyframes float-gentle {
   0%, 100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-15px) scale(1.05);
+    transform: translateY(-15px);
   }
 }
 
 @keyframes slideInFromBottom {
   from {
     opacity: 0;
-    transform: translateY(60px) scale(0.98);
+    transform: translateY(30px); 
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0); 
   }
 }
 
 @keyframes slideInFromBottomDelayed {
   from {
     opacity: 0;
-    transform: translateY(50px) scale(0.98);
+    transform: translateY(30px); 
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0); 
   }
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(40px) scale(0.98);
+    transform: translateY(30px); 
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0); 
   }
 }
 
 @keyframes slideInScale {
   from {
     opacity: 0;
-    transform: translateY(50px) scale(0.95);
+    transform: translateY(30px); 
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0); 
   }
 }
 
@@ -413,24 +430,32 @@ app-footer .footer-grid {
   }
 }
 
-/* ================================================
-   RESPONSIVE DESIGN - MOBILE FIRST
-   ================================================ */
+/* =====================
+   RESPONSIVE 
+   ===================== */
 
-/* Extra Small Devices (Portrait phones, less than 576px) */
+/* Mobile Small */
 @media (max-width: 575.98px) {
   .scroll-progress-container {
     height: 3px;
   }
   
   .component-hidden:not(.footer-section) {
-    transform: translateY(30px);
+    transform: translateY(20px); 
   }
   
   .loader-spinner {
     width: 45px;
     height: 45px;
     border-width: 2px;
+  }
+  
+  .loader-text {
+    font-size: 1.25rem; 
+  }
+  
+  .loader-subtext {
+    font-size: 0.875rem; 
   }
   
   .back-to-top-btn {
@@ -444,20 +469,12 @@ app-footer .footer-grid {
     width: 1.25rem;
     height: 1.25rem;
   }
-  
-  .animated-component {
-    transform: translateY(40px);
-  }
 }
 
-/* Small Devices (Landscape phones, 576px and up) */
+/* Mobile Large */
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .scroll-progress-container {
-    height: 3px;
-  }
-  
   .component-hidden:not(.footer-section) {
-    transform: translateY(40px);
+    transform: translateY(25px); 
   }
   
   .back-to-top-btn {
@@ -468,50 +485,17 @@ app-footer .footer-grid {
   }
 }
 
-/* Medium Devices (Tablets, 768px and up) */
+/* Tablet */
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .scroll-progress-container {
-    height: 4px;
-  }
-  
   .component-hidden:not(.footer-section) {
-    transform: translateY(50px);
-  }
-  
-  .back-to-top-btn {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 3.25rem;
-    height: 3.25rem;
+    transform: translateY(30px); 
   }
 }
 
-/* Large Devices (Desktops, 992px and up) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .scroll-progress-container {
-    height: 4px;
-  }
-  
+/* Desktop */
+@media (min-width: 992px) {
   .component-hidden:not(.footer-section) {
-    transform: translateY(60px);
-  }
-  
-  .back-to-top-btn {
-    bottom: 2rem;
-    right: 2rem;
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-}
-
-/* Extra Large Devices (Large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-  .scroll-progress-container {
-    height: 5px;
-  }
-  
-  .component-hidden:not(.footer-section) {
-    transform: translateY(60px);
+    transform: translateY(30px); 
   }
   
   .back-to-top-btn {
@@ -523,10 +507,9 @@ app-footer .footer-grid {
 }
 
 /* ================================================
-   ACCESSIBILITY & PERFORMANCE
+   Accessibility
    ================================================ */
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -558,7 +541,6 @@ app-footer .footer-grid {
   }
 }
 
-/* High Contrast */
 @media (prefers-contrast: high) {
   .back-to-top-btn {
     background: #000000;
@@ -569,28 +551,13 @@ app-footer .footer-grid {
     background: #9ad4d6;
     box-shadow: none;
   }
-  
-  .scroll-progress-container {
-    background: rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid #9ad4d6;
-  }
-  
-  .page-loader {
-    background: #000000;
-  }
-  
-  .loader-spinner {
-    border-color: #9ad4d6;
-  }
 }
 
-/* Focus States */
 .back-to-top-btn:focus-visible {
   outline: 2px solid #9ad4d6;
   outline-offset: 3px;
 }
 
-/* Print Styles */
 @media print {
   .page-loader,
   .back-to-top-btn,
@@ -603,14 +570,10 @@ app-footer .footer-grid {
     opacity: 1;
     transform: none;
   }
-  
-  body {
-    overflow: visible;
-  }
 }
 
 /* ================================================
-   UTILITY CLASSES FOR SCROLL PREVENTION
+   Container Utilities
    ================================================ */
 
 .no-horizontal-scroll {
@@ -618,15 +581,6 @@ app-footer .footer-grid {
   max-width: 100vw !important;
 }
 
-.container-fluid-safe {
-  width: 100%;
-  max-width: 100vw;
-  padding-left: clamp(1rem, 4vw, 2rem);
-  padding-right: clamp(1rem, 4vw, 2rem);
-  overflow-x: hidden;
-}
-
-/* Ensure Tailwind container classes don't cause overflow */
 .container {
   max-width: 100vw !important;
   overflow-x: hidden !important;
