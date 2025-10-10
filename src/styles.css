@@ -79,8 +79,3 @@ app-footer {
   background: transparent;
 }
 
-@media screen and (min-width: 2560px) {
-  html {
-    font-size: 90%;
-  }
-}
