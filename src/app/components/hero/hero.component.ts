@@ -56,7 +56,7 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   private checkScreenSize(): void {
     if (!this.isBrowser) return;
-    this.isMobile = window.innerWidth < 768;
+    this.isMobile = window.innerWidth < 640;
   }
 
   private startTypingAnimation(): void {
