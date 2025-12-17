@@ -11,16 +11,16 @@
 
   <!-- Main Content -->
   <div
-    class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 lg:pt-0 min-h-screen flex items-start sm:items-center">
+    class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-20 sm:pt-24 lg:pt-0 min-h-screen flex items-start sm:items-center">
     <div
-      class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16 items-center w-full py-8 sm:py-12 lg:py-0">
+      class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center w-full py-8 sm:py-12 lg:py-0">
 
       <!-- Left Column - Content -->
       <div class="order-1 lg:order-1 space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left">
 
         <!-- Main Title -->
         <div class="space-y-3 md:space-y-4">
-          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
             <span class="block">Hi, I'm</span>
             <span
               class="block text-transparent bg-clip-text bg-gradient-to-r from-accent-400 via-accent-300 to-primary-400 animate-pulse">
@@ -38,7 +38,7 @@
 
         <!-- Description -->
         <p
-          class="text-sm sm:text-base md:text-lg lg:text-xl text-neutral-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
+          class="text-sm sm:text-base md:text-lg text-neutral-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
           Crafting exceptional digital experiences with modern technologies.
           <span class="text-accent-300 font-medium">Full Stack Developer</span>
           specializing in MERN stack and cross-platform solutions.
@@ -49,7 +49,7 @@
           <div *ngFor="let skill of skillTags" class="group cursor-pointer" (mouseenter)="onSkillHover(skill)"
             (mouseleave)="onSkillLeave()">
             <div
-              class="px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full transition-all duration-300 group-hover:bg-white/10 group-hover:border-accent-400/50 group-hover:scale-105">
+              class="px-2 py-1 sm:px-3 sm:py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full transition-all duration-300 group-hover:bg-white/10 group-hover:border-accent-400/50 group-hover:scale-105">
               <span class="text-xs sm:text-sm text-neutral-300 group-hover:text-accent-300">{{skill}}</span>
             </div>
           </div>
@@ -75,7 +75,7 @@
         </div>
 
         <!-- Social Links -->
-        <div class="flex gap-3 sm:gap-4 md:gap-6 justify-center lg:justify-start">
+        <div class="flex gap-3 sm:gap-4 justify-center lg:justify-start">
           <a href="https://github.com/anicabarrios" target="_blank"
             class="group relative transform transition-all duration-300 hover:scale-110">
             <div
@@ -114,9 +114,9 @@
         </div>
       </div>
 
-      <!-- Right Column -->
+      <!-- Right Column - Photo -->
       <div class="order-2 lg:order-2 relative flex justify-center lg:justify-end mb-8 lg:mb-0">
-        <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+        <div class="relative w-full max-w-md">
 
           <!-- Background Effects -->
           <div class="absolute inset-0 -z-10">
@@ -134,7 +134,7 @@
               class="absolute inset-0 rounded-full bg-gradient-to-r from-accent-400/10 via-primary-500/8 to-accent-400/10 blur-xl group-hover:blur-2xl transition-all duration-700">
             </div>
 
-            <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-80 lg:h-80 xl:w-96 xl:h-96 mx-auto">
+            <div class="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 mx-auto">
               <div
                 class="absolute inset-0 rounded-full bg-gradient-to-r from-accent-400 via-primary-500 to-accent-400 p-1 group-hover:from-accent-300 group-hover:via-primary-400 group-hover:to-accent-300 transition-all duration-500">
                 <div class="w-full h-full rounded-full bg-neutral-900 p-2">

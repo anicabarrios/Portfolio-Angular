@@ -13,7 +13,7 @@
     <div class="absolute bottom-10 right-10 w-20 h-20 bg-primary-200/10 rounded-full blur-xl animate-float-subtle" style="animation-delay: 4s;"></div>
   </div>
 
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
     
     <!-- Section Header -->
     <div class="text-center mb-8 lg:mb-12">
@@ -30,7 +30,7 @@
         </span>
       </h2>
       
-      <p class="text-lg md:text-xl lg:text-2xl text-neutral-600 max-w-3xl mx-auto leading-relaxed animate-gentle-fade px-4 sm:px-0" style="animation-delay: 0.4s;">
+      <p class="text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed animate-gentle-fade px-4 sm:px-0" style="animation-delay: 0.4s;">
         Ready to bring your project to life? 
         <span class="text-accent-600 font-semibold">
           Let's discuss your ideas
@@ -221,7 +221,7 @@
                              formControlName="name"
                              placeholder="Your name"
                              autocomplete="name"
-                             class="modern-input w-full h-10 px-4 rounded-xl focus:outline-none transition-all duration-500 text-primary-900"
+                             class="modern-input w-full h-10 px-4 rounded-xl focus:outline-none transition-all duration-500 text-primary-900 text-base"
                              [ngClass]="{
                                'field-invalid': isFieldInvalid('name'),
                                'field-valid': isFieldValid('name')
@@ -246,7 +246,7 @@
                              formControlName="email"
                              placeholder="your@email.com"
                              autocomplete="email"
-                             class="modern-input w-full h-10 px-4 rounded-xl focus:outline-none transition-all duration-500 text-primary-900"
+                             class="modern-input w-full h-10 px-4 rounded-xl focus:outline-none transition-all duration-500 text-primary-900 text-base"
                              [ngClass]="{
                                'field-invalid': isFieldInvalid('email'),
                                'field-valid': isFieldValid('email')
@@ -301,7 +301,7 @@
                            id="subject"
                            formControlName="subject"
                            placeholder="Brief project description"
-                           class="modern-input w-full h-10 px-4 rounded-xl focus:outline-none transition-all duration-500 text-primary-900"
+                           class="modern-input w-full h-10 px-4 rounded-xl focus:outline-none transition-all duration-500 text-primary-900 text-base"
                            [ngClass]="{
                              'field-invalid': isFieldInvalid('subject'),
                              'field-valid': isFieldValid('subject')
@@ -325,7 +325,7 @@
                               formControlName="message"
                               rows="4"
                               placeholder="Tell me about your project..."
-                              class="modern-input w-full px-4 py-3 rounded-xl focus:outline-none transition-all duration-500 text-primary-900 resize-none leading-relaxed"
+                              class="modern-input w-full px-4 py-3 rounded-xl focus:outline-none transition-all duration-500 text-primary-900 resize-none leading-relaxed text-base"
                               [ngClass]="{
                                 'field-invalid': isFieldInvalid('message'),
                                 'field-valid': isFieldValid('message')

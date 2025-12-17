@@ -1,19 +1,3 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  position: relative;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-/* ================
-   Page Loader 
-   ================ */
-
 .page-loader {
   position: fixed;
   inset: 0;
@@ -24,7 +8,7 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 99999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
   overflow: hidden;
 }
 
@@ -55,28 +39,28 @@ body {
   animation: float-gentle 4s ease-in-out infinite;
 }
 
-/* Loader Components */
 .loader-content {
   text-align: center;
   color: white;
   position: relative;
   z-index: 2;
   padding: 1rem;
+  max-width: 90%;
 }
 
 .loader-spinner {
-  width: 60px;
-  height: 60px;
+  width: 3rem;
+  height: 3rem;
   border: 3px solid rgba(154, 212, 214, 0.2);
   border-top-color: #9ad4d6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 1.5rem;
-  box-shadow: 0 0 20px rgba(154, 212, 214, 0.3);
+  box-shadow: 0 0 1.25rem rgba(154, 212, 214, 0.3);
 }
 
 .loader-text {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   background: linear-gradient(90deg, #9ad4d6 0%, #ffffff 50%, #9ad4d6 100%);
@@ -84,19 +68,18 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 100%;
+  line-height: 1.2;
 }
 
 .loader-subtext {
-  font-size: 0.9375rem; 
+  font-size: 0.9375rem;
   opacity: 0.8;
   color: #9ad4d6;
   font-weight: 500;
   letter-spacing: 0.025em;
 }
 
-/* ================================================
-   Scroll Progress Bar
-   ================================================ */
+
 
 .scroll-progress-container {
   position: fixed;
@@ -127,14 +110,18 @@ body {
   border-radius: 0 2px 2px 0;
 }
 
+/* ================================================
+   Section Visibility & Animation States
+   ================================================ */
+
 .component-visible {
   opacity: 1;
-  transform: translateY(0); 
+  transform: translateY(0);
 }
 
 .component-hidden {
   opacity: 0;
-  transform: translateY(30px); 
+  transform: translateY(24px);
 }
 
 /* Hero Section */
@@ -151,10 +138,10 @@ body {
 .hero-section.visible-after-loader {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.6s ease-out 0.2s, visibility 0.6s ease-out 0.2s;
+  transition: opacity 0.7s ease-out 0.1s, visibility 0.7s ease-out 0.1s;
 }
 
-/* All Sections */
+/* All Section Components */
 .about-section,
 .skills-section,
 .projects-section,
@@ -166,15 +153,13 @@ body {
   position: relative;
 }
 
+/* Header */
 app-header {
   position: static;
 }
 
-/* Footer */
-app-footer,
-app-footer *,
-app-footer .container,
-app-footer .footer-grid {
+/* Footer - No transforms */
+app-footer {
   transform: none !important;
   max-width: 100% !important;
   overflow-x: hidden !important;
@@ -184,13 +169,13 @@ app-footer .footer-grid {
 .footer-hidden {
   opacity: 0;
   transform: none !important;
-  transition: opacity 1s ease-out;
+  transition: opacity 0.7s ease-out;
 }
 
 .footer-section.component-visible {
   opacity: 1;
   transform: none !important;
-  transition: opacity 1s ease-out;
+  transition: opacity 0.7s ease-out;
 }
 
 /* ================================================
@@ -199,10 +184,10 @@ app-footer .footer-grid {
 
 .back-to-top-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 3.5rem;
-  height: 3.5rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 3rem;
+  height: 3rem;
   background: linear-gradient(135deg, #586f7c 0%, #9ad4d6 100%);
   color: white;
   border: none;
@@ -213,7 +198,7 @@ app-footer .footer-grid {
   justify-content: center;
   z-index: 9999;
   opacity: 0;
-  transform: translateY(10px); 
+  transform: translateY(10px) scale(0.9);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(88, 111, 124, 0.2);
   outline: none;
@@ -234,12 +219,12 @@ app-footer .footer-grid {
 
 .back-to-top-btn.visible {
   opacity: 1;
-  transform: translateY(0); 
+  transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
 .back-to-top-btn:hover {
-  transform: translateY(-4px); 
+  transform: translateY(-4px) scale(1.05);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 8px 25px rgba(88, 111, 124, 0.3);
 }
 
@@ -248,13 +233,13 @@ app-footer .footer-grid {
 }
 
 .back-to-top-btn:active {
-  transform: translateY(-2px); 
+  transform: translateY(-2px) scale(1.02);
   transition: transform 0.1s ease;
 }
 
 .back-to-top-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -262,42 +247,24 @@ app-footer .footer-grid {
   transform: translateY(-2px);
 }
 
-/* =========================
-   Animation Classes 
-   =========================*/
+/* ================================================
+   Animation Classes
+   ================================================ */
 
 .animate-footer-slide {
-  animation: footerFadeIn 1s ease-out forwards !important;
+  animation: footerFadeIn 0.7s ease-out forwards !important;
 }
 
 .animate-slide-in-delayed,
 .animate-fade-in-up,
 .animate-slide-scale,
 .animate-slide-in-bottom {
-  animation-duration: 1s;
-  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  animation-fill-mode: forwards;
+  animation: slideIn 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-.animate-slide-in-bottom {
-  animation-name: slideInFromBottom;
-}
-
-.animate-slide-in-delayed {
-  animation-name: slideInFromBottomDelayed;
-}
-
-.animate-fade-in-up {
-  animation-name: fadeInUp;
-}
-
-.animate-slide-scale {
-  animation-name: slideInScale;
-}
-
-/* ==================
-   Keyframes 
-   ==================*/
+/* ================================================
+   Keyframes
+   ================================================ */
 
 @keyframes spin {
   to {
@@ -314,47 +281,14 @@ app-footer .footer-grid {
   }
 }
 
-@keyframes slideInFromBottom {
+@keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(30px); 
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
-    transform: translateY(0); 
-  }
-}
-
-@keyframes slideInFromBottomDelayed {
-  from {
-    opacity: 0;
-    transform: translateY(30px); 
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); 
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px); 
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); 
-  }
-}
-
-@keyframes slideInScale {
-  from {
-    opacity: 0;
-    transform: translateY(30px); 
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); 
+    transform: translateY(0);
   }
 }
 
@@ -367,79 +301,66 @@ app-footer .footer-grid {
   }
 }
 
-/* =====================
-   RESPONSIVE 
-   ===================== */
 
-/* Mobile Small */
-@media (max-width: 575.98px) {
+/* Small mobile */
+@media (max-width: 640px) {
   .scroll-progress-container {
     height: 3px;
   }
-  
+
   .component-hidden:not(.footer-section) {
-    transform: translateY(20px); 
+    transform: translateY(18px);
   }
-  
+
   .loader-spinner {
-    width: 45px;
-    height: 45px;
+    width: 2.5rem;
+    height: 2.5rem;
     border-width: 2px;
   }
-  
+
   .loader-text {
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
   }
-  
+
   .loader-subtext {
-    font-size: 0.875rem; 
+    font-size: 0.875rem;
   }
-  
+
   .back-to-top-btn {
     bottom: 1rem;
     right: 1rem;
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
-  
+
   .back-to-top-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1rem;
+    height: 1rem;
   }
 }
 
-/* Mobile Large */
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .component-hidden:not(.footer-section) {
-    transform: translateY(25px); 
-  }
-  
+/* Tablet and up */
+@media (min-width: 768px) {
   .back-to-top-btn {
     bottom: 1.5rem;
     right: 1.5rem;
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 3rem;
+    height: 3rem;
   }
 }
 
-/* Tablet */
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .component-hidden:not(.footer-section) {
-    transform: translateY(30px); 
-  }
-}
-
-/* Desktop */
-@media (min-width: 992px) {
-  .component-hidden:not(.footer-section) {
-    transform: translateY(30px); 
-  }
-  
+/* Desktop and up */
+@media (min-width: 1024px) {
   .back-to-top-btn {
     bottom: 2rem;
     right: 2rem;
     width: 3.5rem;
     height: 3.5rem;
+  }
+
+  .back-to-top-icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
@@ -451,11 +372,11 @@ app-footer .footer-grid {
   html {
     scroll-behavior: auto;
   }
-  
+
   .page-loader {
     display: none;
   }
-  
+
   *,
   *::before,
   *::after {
@@ -463,7 +384,7 @@ app-footer .footer-grid {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .page-content,
   .animated-component,
   .component-hidden,
@@ -483,10 +404,18 @@ app-footer .footer-grid {
     background: #000000;
     border: 2px solid #9ad4d6;
   }
-  
+
   .scroll-progress-bar {
     background: #9ad4d6;
     box-shadow: none;
+  }
+
+  .scroll-progress-container {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .page-loader {
+    background: #000000;
   }
 }
 
@@ -495,26 +424,38 @@ app-footer .footer-grid {
   outline-offset: 3px;
 }
 
+/* Print */
 @media print {
   .page-loader,
   .back-to-top-btn,
   .scroll-progress-container {
     display: none;
   }
-  
+
   .page-content,
   .animated-component {
-    opacity: 1;
-    transform: none;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
-/* ================================================
-   Container Utilities
-   ================================================ */
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .back-to-top-btn {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
 
-.no-horizontal-scroll {
-  overflow-x: hidden !important;
-  max-width: 100% !important;
+  .back-to-top-btn:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
 }
 
+/* Safe area for notched devices */
+@supports (padding: max(0px)) {
+  .back-to-top-btn {
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    right: max(1rem, env(safe-area-inset-right));
+  }
+}

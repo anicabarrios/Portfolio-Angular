@@ -29,16 +29,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.isBrowser) {
-      // Initialize scroll state
       this.updateScrollState();
     }
   }
 
   ngOnDestroy(): void {
-    // Cleanup if needed
+    if (this.isBrowser) {
+      document.body.style.overflow = '';
+    }
   }
   
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll(): void {
     if (!this.isBrowser) return;
     
@@ -64,12 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuOpen = !this.menuOpen;
     
     if (this.isBrowser) {
-      // Prevent body scroll when menu is open on mobile
-      if (this.menuOpen) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
+      document.body.style.overflow = this.menuOpen ? 'hidden' : '';
     }
   }
   
@@ -82,7 +78,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       } else {
         const element = document.querySelector(selector);
         if (element) {
-          // Account for fixed header height
           const headerHeight = 80;
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerHeight;
@@ -93,15 +88,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           });
         }
       }
-    } catch (error) {
-      // Fallback for browsers that don't support smooth scrolling
+    } catch {
       if (selector === '#') {
         window.scrollTo(0, 0);
       } else {
-        const element = document.querySelector(selector);
-        if (element) {
-          element.scrollIntoView();
-        }
+        document.querySelector(selector)?.scrollIntoView();
       }
     }
   }
@@ -110,10 +101,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuOpen = false;
     
     if (this.isBrowser) {
-      // Restore body scroll
       document.body.style.overflow = '';
-      
-      // Small delay to allow menu close animation
       setTimeout(() => this.navigateTo(selector), 100);
     }
   }
@@ -125,25 +113,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLElement;
     const header = target.closest('header');
     
-    // Close mobile menu when clicking outside
     if (this.menuOpen && !header) {
       this.menuOpen = false;
       document.body.style.overflow = '';
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onWindowResize(): void {
     if (!this.isBrowser) return;
 
-    // Close mobile menu on resize (when switching to desktop view)
     if (this.menuOpen && window.innerWidth >= 1024) {
       this.menuOpen = false;
       document.body.style.overflow = '';
     }
   }
 
-  @HostListener('window:keydown.escape', ['$event'])
+  @HostListener('window:keydown.escape')
   onEscapeKey(): void {
     if (this.menuOpen) {
       this.menuOpen = false;

@@ -83,12 +83,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     ['footer-section', 'footer']
   ]);
 
-  private readonly ANIMATION_DELAY = 200;
-  private readonly LOADING_DURATION = 1200;
-  private readonly HERO_DELAY = 100;
-  private readonly OBSERVER_DELAY = 150;
+  private readonly ANIMATION_DELAY = 150;
+  private readonly LOADING_DURATION = 900;
+  private readonly HERO_DELAY = 80;
+  private readonly OBSERVER_DELAY = 120;
   private readonly WILL_CHANGE_CLEANUP_DELAY = 1000;
-  private readonly SCROLL_THRESHOLD = 500;
+  private readonly SCROLL_THRESHOLD = 400;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -102,6 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     if (this.isBrowser) {
+      this.removeInitialLoader();
       document.body.classList.add('angular-ready');
       this.animationsEnabled = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       
@@ -125,6 +126,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cleanup();
   }
 
+  private removeInitialLoader(): void {
+    const initialLoader = document.getElementById('initial-loader');
+    if (initialLoader) {
+      initialLoader.classList.add('hide');
+      this.scheduleTask(() => {
+        initialLoader.remove();
+      }, 500);
+    }
+  }
+
 
   private initializeScrollBehavior(): void {
     if ('scrollRestoration' in history) {
@@ -138,7 +149,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   private startLoadingSequence(): void {
     this.setAllComponentsVisible(false);
-    this.loadingTimer = this.scheduleTask(() => this.completeLoading(), this.LOADING_DURATION);
+    this.loadingTimer = this.scheduleTask(() => this.completeLoading(), 800);
   }
 
   private completeLoading(): void {
@@ -187,8 +198,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private setupIntersectionObserver(): void {
     const options: IntersectionObserverInit = {
-      threshold: [0.1, 0.25],
-      rootMargin: '0px 0px -80px 0px'
+      threshold: [0.1, 0.2],
+      rootMargin: '0px 0px -60px 0px'
     };
 
     this.intersectionObserver = new IntersectionObserver(

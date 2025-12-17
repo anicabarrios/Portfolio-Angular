@@ -21,10 +21,11 @@
   grid-auto-rows: 1fr;
 }
 
-/* Staggered Animation Delays */
+/* Staggered Animation Delays for 4 cards */
 .project-card-1 { animation-delay: 0.1s; }
-.project-card-2 { animation-delay: 0.3s; }
-.project-card-3 { animation-delay: 0.5s; }
+.project-card-2 { animation-delay: 0.25s; }
+.project-card-3 { animation-delay: 0.4s; }
+.project-card-4 { animation-delay: 0.55s; }
 
 /* Responsive Optimizations */
 @media (max-width: 639px) {
@@ -53,41 +54,42 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .auto-rows-fr {
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
   
   .project-card {
-    min-height: 340px;
+    min-height: 360px;
   }
 }
 
+/* Desktop: 2 columns, 2 rows for 4 cards */
 @media (min-width: 1024px) {
-  .auto-rows-fr {
-    gap: 1rem; 
-  }
-  
-  .project-card {
-    min-height: 380px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .auto-rows-fr {
-    gap: 1.25rem; 
-  }
-  
-  .project-card {
-    min-height: 400px;
-  }
-}
-
-@media (min-width: 1536px) {
   .auto-rows-fr {
     gap: 1.5rem; 
   }
   
   .project-card {
     min-height: 420px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .auto-rows-fr {
+    gap: 2rem; 
+  }
+  
+  .project-card {
+    min-height: 450px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .auto-rows-fr {
+    gap: 2rem; 
+  }
+  
+  .project-card {
+    min-height: 480px;
   }
 }
 

@@ -30,8 +30,11 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "prerender": false,
-            "ssr": false
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {

@@ -12,6 +12,18 @@ import { CardComponent, CardData } from '../card/card.component';
 export class ProjectsComponent {
   projectsData: CardData[] = [
     {
+      title: 'Law Office Suzana Lj. Ilic',
+      description: 'A professional, bilingual website for Advokatska Kancelarija Ilić Lj. Suzana, a distinguished law firm with 30+ years of expertise. Features a secure admin panel for content management, interactive Q&A system with bilingual support, and comprehensive service pages across 12 practice areas.',
+      items: ['React', 'Bootstrap', 'Node.js', 'MongoDB', 'JWT Auth', 'EmailJS'],
+      imageUrl: 'images/suki.png',
+      imageAlt: 'Legal services website homepage with bilingual support',
+      imageCaption: 'Professional bilingual website with admin panel and Q&A system',
+      links: [
+        { text: 'View Live', url: 'https://advokatska-kancelarija.onrender.com/' },
+        { text: 'GitHub', url: 'https://github.com/anicabarrios/consultation' }
+      ]
+    },
+    {
       title: 'About Love Bridal & Formal',
       description: 'An elegant website designed specifically for a luxury bridal boutique, featuring an extensive collection of wedding dresses, quinceañera gowns, and formal wear. The website combines sophisticated animations with seamless user experience enhancing boutique\'s premium brand identity.',
       items: ['React.js', 'TailwindCSS', 'Framer Motion', 'React Router', 'EmailJS', 'Responsive Design'],
@@ -35,7 +47,6 @@ export class ProjectsComponent {
         { text: 'GitHub', url: 'https://github.com/anicabarrios/miami-2000' }
       ]
     },
-    
     {
       title: 'Laser Engraving Website',
       description: 'A professional business website showcasing precision laser engraving services with elegant UI design and custom animations. The platform features a comprehensive service portfolio, interactive galleries showcasing engraving capabilities that highlight the company\'s craftsmanship and attention to detail.',
@@ -51,12 +62,12 @@ export class ProjectsComponent {
   ];
 
   getProjectIcon(index: number): string {
-  const icons = ['💍', '🚗', '⚙️', '🔧'];
-  return icons[index] || '🚀';
-}
+    const icons = ['⚖️', '💍', '🚗', '⚙️'];
+    return icons[index] || '🚀';
+  }
 
   getProjectVariant(index: number): 'primary' | 'accent' | 'neutral' {
-    const variants: ('primary' | 'accent' | 'neutral')[] = ['primary', 'accent', 'primary', 'accent'];
+    const variants: ('primary' | 'accent' | 'neutral')[] = ['primary', 'accent', 'primary', 'neutral'];
     return variants[index % variants.length];
   }
 }

@@ -49,7 +49,7 @@ export class HeroComponent implements OnInit, OnDestroy {
     if (this.cursorInterval) clearInterval(this.cursorInterval);
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     if (this.isBrowser) this.checkScreenSize();
   }
@@ -96,19 +96,19 @@ export class HeroComponent implements OnInit, OnDestroy {
   }
 
   onSkillHover(skill: string): void {
-    if (!this.isMobile) {
-      console.log(`Hovering over ${skill}`);
-    }
+    // Optional: Add skill hover functionality
   }
 
-  onSkillLeave(): void {}
+  onSkillLeave(): void {
+    // Optional: Add skill leave functionality
+  }
 
   scrollToContact(): void {
     this.smoothScrollTo('#contact');
   }
 
   scrollToContent(): void {
-    const nextSection = document.querySelector('#skills, #about, .next-section');
+    const nextSection = document.querySelector('#about, #skills, .next-section');
     if (nextSection) {
       this.smoothScrollToElement(nextSection);
     } else {

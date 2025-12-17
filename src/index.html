@@ -5,18 +5,135 @@
   <meta charset="utf-8">
   <title>Anica Barrios | Full Stack Web Developer</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  
+  <!-- Improved viewport settings to prevent desktop zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  
+  <!-- Additional meta tags -->
   <meta name="format-detection" content="telephone=no">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Anica Barrios - Full Stack Web Developer specializing in MERN stack, Angular, React, and Flutter. Based in Hollywood, FL.">
+  <meta name="keywords" content="Full Stack Developer, MERN Stack, Angular, React, Flutter, Web Development, Hollywood FL">
+  <meta name="author" content="Anica Barrios">
+  
+  <!-- Critical CSS - Prevents white flash -->
+  <style>
+    /* Immediately set dark background to prevent white flash */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background: #171717;
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Initial pre-loader - shows immediately before Angular loads */
+    #initial-loader {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, #171717 0%, #2f4550 50%, #171717 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    #initial-loader.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    #initial-loader::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(47, 69, 80, 0.2) 0%, rgba(154, 212, 214, 0.1) 50%, rgba(47, 69, 80, 0.2) 100%);
+      opacity: 0.3;
+    }
+    
+    .initial-loader-content {
+      text-align: center;
+      color: white;
+      position: relative;
+      z-index: 2;
+      padding: 1rem;
+    }
+    
+    .initial-loader-spinner {
+      width: 3rem;
+      height: 3rem;
+      border: 3px solid rgba(154, 212, 214, 0.2);
+      border-top-color: #9ad4d6;
+      border-radius: 50%;
+      animation: initial-spin 1s linear infinite;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 0 1.25rem rgba(154, 212, 214, 0.3);
+    }
+    
+    .initial-loader-text {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #9ad4d6 0%, #ffffff 50%, #9ad4d6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+    
+    .initial-loader-subtext {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 0.9375rem;
+      opacity: 0.8;
+      color: #9ad4d6;
+      font-weight: 500;
+      letter-spacing: 0.025em;
+    }
+    
+    @keyframes initial-spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Hide initial loader when Angular is ready */
+    .angular-ready #initial-loader {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  </style>
+  
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-
 </head>
 
 <body>
+  <!-- Initial loader - shows immediately, hidden when Angular bootstraps -->
+  <div id="initial-loader">
+    <div class="initial-loader-content">
+      <div class="initial-loader-spinner"></div>
+      <div class="initial-loader-text">Anica Barrios</div>
+      <div class="initial-loader-subtext">Loading Portfolio...</div>
+    </div>
+  </div>
+  
   <app-root></app-root>
 </body>
 
